@@ -1,18 +1,27 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import App from './App.jsx'
-import {  RouterProvider } from 'react-router'
-import router from './Router/Router.jsx'
-import AuthProvider from './Provider/AuthProvider.jsx'
-import { ThemeProvider } from './Context/ThemeContaxt.jsx'
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import "./index.css";
+import { RouterProvider } from "react-router";
+import { router } from "./routes/Router";
+import AuthProvider from "./Provider/AuthProvider";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Toaster } from "react-hot-toast";
+// import { HelmetProvider } from "react-helmet-async";
+import "react-date-range/dist/styles.css"; // main style file
+import "react-date-range/dist/theme/default.css"; // theme css file
+
+// Create a client
+const queryClient = new QueryClient();
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <ThemeProvider>
-      <AuthProvider>
-        <RouterProvider router={router} />
-      </AuthProvider>
-    </ThemeProvider>
+    <AuthProvider>
+      <HelmetProvider>
+        <QueryClientProvider client={queryClient}>
+          <RouterProvider router={router} />
+        </QueryClientProvider>
+        <Toaster position="top-right" reverseOrder={false} />
+      </HelmetProvider>
+    </AuthProvider>
   </StrictMode>
 );
