@@ -1,112 +1,91 @@
-// /* eslint-disable react/prop-types */
-import { createContext, useEffect, useState } from "react";
+import React, { Children, createContext, useEffect, useState } from "react";import app from "../../firebase.config";
+
 import {
-  GoogleAuthProvider,
   createUserWithEmailAndPassword,
   getAuth,
+  GoogleAuthProvider,
   onAuthStateChanged,
+  sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
   updateProfile,
 } from "firebase/auth";
-import app from "../../firebase.config";
-import axios from "axios";
 
-// eslint-disable-next-line react-refresh/only-export-components
-export const AuthContext = createContext(null);
+export const AuthContext = createContext();
+
 const auth = getAuth(app);
-const googleProvider = new GoogleAuthProvider();
-
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const provider = new GoogleAuthProvider();
 
+  // register
   const createUser = (email, password) => {
     setLoading(true);
     return createUserWithEmailAndPassword(auth, email, password);
   };
+  // google register/login
+  const createUserWithLoginGoogle = () => {
+    return signInWithPopup(auth, provider);
+  };
 
-  const signIn = (email, password) => {
+  // github register/login
+  const createUserWithGithub = () => {
+    return signInWithPopup(auth, provider);
+  };
+
+  // login
+
+  const loginUser = (email, password) => {
     setLoading(true);
     return signInWithEmailAndPassword(auth, email, password);
   };
 
-  const signInWithGoogle = () => {
-    setLoading(true);
-    return signInWithPopup(auth, googleProvider);
+  // reset password
+
+  const resetPassword = (email) => {
+    return sendPasswordResetEmail(auth, email);
   };
 
-  const logOut = async () => {
-    setLoading(true);
-    return signOut(auth);
-  };
+  // update profile
 
-  const updateUserProfile = (name, photo) => {
+  const profile = (name, photo) => {
     return updateProfile(auth.currentUser, {
       displayName: name,
       photoURL: photo,
     });
   };
 
-  // onAuthStateChange
+  // logOut
+  const logout = () => {
+    return signOut(auth);
+  };
+
+  // observer
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
-      console.log("CurrentUser-->", currentUser?.email);
-
-      if (currentUser?.email) {
-        setUser(currentUser);
-
-        // save user info in db
-        await axios.post(
-          `${import.meta.env.VITE_API_URL}/users/${currentUser?.email}`,
-          {
-            name: currentUser?.displayName,
-            image: currentUser?.photoURL,
-            email: currentUser?.email,
-          }
-        );
-
-        // Get JWT token
-        try {
-          await axios.post(
-            `${import.meta.env.VITE_API_URL}/jwt`,
-            { email: currentUser?.email },
-            { withCredentials: true }
-          );
-        } catch (error) {
-          console.error("Error getting JWT token:", error);
-        }
-      } else {
-        setUser(null);
-        await axios.get(`${import.meta.env.VITE_API_URL}/logout`, {
-          withCredentials: true,
-        });
-      }
-
-      setLoading(false); // Ensure this is called after the user is set
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+      setLoading(false);
     });
-
     return () => {
-      return unsubscribe();
+      unsubscribe();
     };
   }, []);
 
-  const authInfo = {
+  const authData = {
     user,
     setUser,
+    createUser,
+    logout,
+    loginUser,
     loading,
     setLoading,
-    createUser,
-    signIn,
-    signInWithGoogle,
-    logOut,
-    updateUserProfile,
+    profile,
+    createUserWithLoginGoogle,
+    createUserWithGithub,
+    resetPassword,
   };
-
-  return (
-    <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>
-  );
+  return <AuthContext value={authData}>{children}</AuthContext>;
 };
-
 export default AuthProvider;
