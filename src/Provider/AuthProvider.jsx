@@ -1,100 +1,112 @@
-import React, { Children, createContext, useEffect, useState } from "react";
+// /* eslint-disable react/prop-types */
+import { createContext, useEffect, useState } from "react";
 import {
+  GoogleAuthProvider,
   createUserWithEmailAndPassword,
   getAuth,
-  GoogleAuthProvider,
   onAuthStateChanged,
-  sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
   updateProfile,
 } from "firebase/auth";
-import app from "../../firebase.config";
+import { app } from "../firebase/Firebase.config";
+import axios from "axios";
 
-export const AuthContext = createContext();
-
+// eslint-disable-next-line react-refresh/only-export-components
+export const AuthContext = createContext(null);
 const auth = getAuth(app);
+const googleProvider = new GoogleAuthProvider();
+
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const provider = new GoogleAuthProvider();
 
-  // register
   const createUser = (email, password) => {
     setLoading(true);
     return createUserWithEmailAndPassword(auth, email, password);
   };
-  // google register/login
-  const createUserWithLoginGoogle = () => {
-    return signInWithPopup(auth, provider);
-  };
 
-  // github register/login
-  const createUserWithGithub = () => {
-    return signInWithPopup(auth, provider);
-  };
-
-  // login
-
-  const loginUser = (email, password) => {
+  const signIn = (email, password) => {
     setLoading(true);
     return signInWithEmailAndPassword(auth, email, password);
   };
 
-  // reset password
-
-  const resetPassword = (email) => {
-    return sendPasswordResetEmail(auth, email);
+  const signInWithGoogle = () => {
+    setLoading(true);
+    return signInWithPopup(auth, googleProvider);
   };
 
-  // update profile
-
-  const profile = (updateData) => {
-    return updateProfile(auth.currentUser, updateData);
-  };
-
-  // logOut
-  const logout = () => {
+  const logOut = async () => {
+    setLoading(true);
     return signOut(auth);
   };
 
-  // observer
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
-      setLoading(false);
-      // if (currentUser?.email) {
-      //   const userData = { email: currentUser.email };
-      //   axios.post("https://bulka-bazar-server.vercel.app/jwt", userData, {
-      //     withCredentials: true,
-      //   })
-      //     .then((data) => {
-      //      console.log(data.data);
-      //     })
-      //     .catch((error) => {
-      //       console.error("Error fetching JWT:", error);
-      //     });
-      // }
+  const updateUserProfile = (name, photo) => {
+    return updateProfile(auth.currentUser, {
+      displayName: name,
+      photoURL: photo,
     });
+  };
+
+  // onAuthStateChange
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+      console.log("CurrentUser-->", currentUser?.email);
+
+      if (currentUser?.email) {
+        setUser(currentUser);
+
+        // save user info in db
+        await axios.post(
+          `${import.meta.env.VITE_API_URL}/users/${currentUser?.email}`,
+          {
+            name: currentUser?.displayName,
+            image: currentUser?.photoURL,
+            email: currentUser?.email,
+          }
+        );
+
+        // Get JWT token
+        try {
+          await axios.post(
+            `${import.meta.env.VITE_API_URL}/jwt`,
+            { email: currentUser?.email },
+            { withCredentials: true }
+          );
+        } catch (error) {
+          console.error("Error getting JWT token:", error);
+        }
+      } else {
+        setUser(null);
+        await axios.get(`${import.meta.env.VITE_API_URL}/logout`, {
+          withCredentials: true,
+        });
+      }
+
+      setLoading(false); // Ensure this is called after the user is set
+    });
+
     return () => {
-      unsubscribe();
+      return unsubscribe();
     };
   }, []);
 
-  const authData = {
+  const authInfo = {
     user,
     setUser,
-    createUser,
-    logout,
-    loginUser,
     loading,
     setLoading,
-    profile,
-    createUserWithLoginGoogle,
-    createUserWithGithub,
-    resetPassword,
+    createUser,
+    signIn,
+    signInWithGoogle,
+    logOut,
+    updateUserProfile,
   };
-  return <AuthContext value={authData}>{children}</AuthContext>;
+
+  return (
+    <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>
+  );
 };
+
 export default AuthProvider;
