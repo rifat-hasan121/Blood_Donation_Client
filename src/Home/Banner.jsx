@@ -11,19 +11,20 @@ const Banner = () => {
   return (
     <div className="">
       <section className="">
-        <div className="bg-[url(https://i.ibb.co/8n7jqYdF/world-blood-donor-day-creative-collage.jpg)] bg-no-repeat bg-cover min-h-screen w-full flex flex-col justify-center items-center">
-          <div className="w-5xl text-center ">
+        <div className="relative bg-[url(https://i.ibb.co/8n7jqYdF/world-blood-donor-day-creative-collage.jpg)] bg-no-repeat bg-cover min-h-screen w-full flex flex-col justify-center items-center">
+          <div class="absolute inset-0 bg-red-500 dark:bg-red-900 dark:opacity-35 opacity-20"></div>
+          <div className="max-w-5xl text-center ">
             <h3 className="text-red-200 text-2xl sm:text-3xl md:text-5xl lg:text-7xl font-extrabold">
               Give Blood, Give Life
             </h3>
-            <p className="text md:text-xl text-white mt-4">
+            <p className="text md:text-xl text-white my-4">
               Every donation can save up to 3 lives. Join our community of{" "}
               <br />
               heroes today.
             </p>
             {/* marquee */}
 
-            <div className="w-3xl mx-auto py-6 rounded-sm bg-sky-100">
+            <div className="max-w-3xl mx-auto py-6 rounded-sm bg-sky-100">
               <Marquee>
                 <div className=" flex gap-12">
                   <LiveSaves />

@@ -5,12 +5,9 @@ import { AiOutlineMenu } from "react-icons/ai";
 import { FaUserCircle } from "react-icons/fa";
 import { AiOutlineContacts, AiOutlineLogout } from "react-icons/ai";
 import { toast } from "react-toastify";
-import { Tooltip } from "react-tooltip";
 import LoadingSpinner from "../LoadingSpinner";
 import ThemeProvider from "../../Provider/ThemeProvider";
 import Swal from "sweetalert2";
-import {  FaShoppingCart } from "react-icons/fa";
-import { LuLogIn } from "react-icons/lu";
 import { AuthContext } from "../../Provider/AuthProvider";
 import { IoHomeOutline } from "react-icons/io5";
 
@@ -45,6 +42,7 @@ const Navbar = () => {
           <span>Home</span>
         </NavLink>
       </li>
+     
       <li>
         <NavLink className="flex gap-2" to="/about">
           <span>

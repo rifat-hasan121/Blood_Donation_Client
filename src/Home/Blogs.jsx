@@ -7,7 +7,7 @@ import blog3 from '../assets/images/27577819_ravi24_may_8.jpg'
 
 const Blogs = () => {
     return (
-      <div className="w-6xl mx-auto py-12">
+      <div className="max-w-6xl mx-auto py-24">
         <div className="flex flex-col justify-center items-center text-center">
           <h3 className="text-xl my-6 md:text-5xl font-bold text-red-700">
             Blood Donation Blogs
@@ -17,7 +17,7 @@ const Blogs = () => {
             about blood donation
           </p>
           {/* search bar */}
-          <div className="w-5xl my-6">
+          <div className="max-w-5xl my-6">
             <SearchBar />
           </div>
           {/* blogs cards */}

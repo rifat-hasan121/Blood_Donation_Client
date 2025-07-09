@@ -1,6 +1,7 @@
 import React from 'react';
 import Banner from './Banner';
 import Blogs from './Blogs';
+import DonateBlood from './DonateBlood';
 
 const Home = () => {
     return (
@@ -10,8 +11,12 @@ const Home = () => {
           <Banner />
             </section>
             {/* blogs section */}
-            <section className='bg-gray-200'>
+            <section className='bg-gray-200 dark:bg-gray-400'>
                 <Blogs/>
+            </section>
+            {/* donate section */}
+            <section className='bg-red-200 dark:bg-gray-400'>
+                <DonateBlood/>
             </section>
       </div>
     );

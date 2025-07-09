@@ -4,6 +4,8 @@ import Home from "../Home/Home";
 import Login from "../pages/ErrorPage/Login";
 import Contact from "../Home/Contact";
 import About from "../Home/About";
+import DashBoardLayout from "../layouts/DashBoardLayout";
+import Profile from "../DashBoard/Profile";
 
 export const router = createBrowserRouter([
   {
@@ -28,4 +30,15 @@ export const router = createBrowserRouter([
     path: "/login",
     Component: Login,
   },
+
+  {
+    path: '/dashboard',
+    element: <DashBoardLayout />,
+    children: [
+      {
+        path: '/dashboard/profile',
+        Component: Profile
+      },
+    ]
+},
 ]);
