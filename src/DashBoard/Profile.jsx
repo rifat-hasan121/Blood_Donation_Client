@@ -1,13 +1,17 @@
-import React, { useState, use } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import banner from "../assets/images/27577819_ravi24_may_8.jpg";
 import { useForm } from "react-hook-form";
 import { FiEdit2 } from "react-icons/fi";
 import { MdEmail, MdPhone, MdLocationPin, MdBloodtype } from "react-icons/md";
 import { AuthContext } from "../Provider/AuthProvider";
+import toast from "react-hot-toast";
+import LoadingSpinner from "../Shared/LoadingSpinner";
 
 const UserProfile = () => {
-  const { user } = use(AuthContext);
+  const { user, updateUser, loading } = useContext(AuthContext);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isFetching, setIsFetching] = useState(false);
 
   const { register, handleSubmit, reset } = useForm({
     defaultValues: {
@@ -19,30 +23,79 @@ const UserProfile = () => {
     },
   });
 
-  // modal open হলে dynamic value বসাও
+  // ✅ Function to fetch user profile from backend
+  const fetchUserProfile = async (email) => {
+    setIsFetching(true);
+    try {
+      const res = await fetch(`http://localhost:3000/profile/${email}`);
+      const data = await res.json();
+
+      // Save user to global context
+      updateUser(data);
+
+      // Populate form with fetched data
+      reset({
+        name: data?.name || data?.displayName || "",
+        email: data?.email || "",
+        phone: data?.phone || "",
+        address: data?.address || "",
+        bloodGroup: data?.bloodGroup || "",
+      });
+
+      setIsFetching(false);
+    } catch (error) {
+      console.error("Error fetching profile:", error);
+      toast.error("Failed to load profile!");
+      setIsFetching(false);
+    }
+  };
+
+  // ✅ Fetch profile on mount
+  useEffect(() => {
+    if (user?.email) {
+      fetchUserProfile(user.email);
+    }
+  }, [user?.email]);
+
   const handleEditClick = () => {
-    reset({
-      name: user?.displayName || "",
-      email: user?.email || "",
-      phone: user?.phone || "",
-      address: user?.address || "",
-      bloodGroup: user?.bloodGroup || "",
-    });
     setIsModalOpen(true);
   };
 
-  const onSubmit = (data) => {
-    console.log("Updated Data:", data);
-    // TODO: Backend এ update request পাঠাও
-    setIsModalOpen(false);
+  // ✅ Save updated profile to backend
+  const onSubmit = async (data) => {
+    try {
+      const res = await fetch(`http://localhost:3000/profile/${data.email}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      const result = await res.json();
+
+      toast.success("Profile updated successfully! 🎉");
+
+      // Fetch again to refresh UI
+      fetchUserProfile(data.email);
+
+      setIsModalOpen(false);
+    } catch (err) {
+      console.error(err);
+      toast.error("Profile update failed!");
+    }
   };
+
+  if (loading || isFetching) {
+    return <LoadingSpinner />;
+  }
 
   return (
     <div className="max-w-4xl mx-auto bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-xl mt-6 text-gray-800 dark:text-gray-200">
-      {/* Header */}
+      {/* Banner */}
       <div className="relative">
         <img
-          src="/banner.jpg"
+          src={banner}
           alt="banner"
           className="w-full h-40 object-cover rounded-t-xl"
         />
@@ -57,7 +110,7 @@ const UserProfile = () => {
 
       <div className="mt-20 text-center">
         <h2 className="text-2xl font-bold">
-          {user?.displayName || "Unknown User"}
+          {user?.name || user?.displayName || "Unknown User"}
         </h2>
         <div className="mt-2 flex justify-center gap-3">
           <span className="badge badge-error">donor</span>
@@ -65,39 +118,28 @@ const UserProfile = () => {
         </div>
       </div>
 
-      {/* Profile Details (Only Text) */}
+      {/* Profile Details */}
       <div className="grid md:grid-cols-2 gap-6 mt-10">
-        <div className="flex items-center gap-4">
-          <MdEmail className="text-2xl text-rose-500" />
-          <div>
-            <p className="text-sm font-semibold">Email</p>
-            <p className="text-base">{user?.email || "N/A"}</p>
-          </div>
-        </div>
-
-        <div className="flex items-center gap-4">
-          <MdPhone className="text-2xl text-rose-500" />
-          <div>
-            <p className="text-sm font-semibold">Phone</p>
-            <p className="text-base">{user?.phone || "N/A"}</p>
-          </div>
-        </div>
-
-        <div className="flex items-center gap-4">
-          <MdLocationPin className="text-2xl text-rose-500" />
-          <div>
-            <p className="text-sm font-semibold">Address</p>
-            <p className="text-base">{user?.address || "Not Provided"}</p>
-          </div>
-        </div>
-
-        <div className="flex items-center gap-4">
-          <MdBloodtype className="text-2xl text-rose-500" />
-          <div>
-            <p className="text-sm font-semibold">Blood Group</p>
-            <p className="text-base">{user?.bloodGroup || "Unknown"}</p>
-          </div>
-        </div>
+        <ProfileRow
+          icon={<MdEmail className="text-2xl text-rose-500" />}
+          label="Email"
+          value={user?.email || "N/A"}
+        />
+        <ProfileRow
+          icon={<MdPhone className="text-2xl text-rose-500" />}
+          label="Phone"
+          value={user?.phone || "N/A"}
+        />
+        <ProfileRow
+          icon={<MdLocationPin className="text-2xl text-rose-500" />}
+          label="Address"
+          value={user?.address || "Not Provided"}
+        />
+        <ProfileRow
+          icon={<MdBloodtype className="text-2xl text-rose-500" />}
+          label="Blood Group"
+          value={user?.bloodGroup || "Unknown"}
+        />
       </div>
 
       {/* Edit Button */}
@@ -117,56 +159,14 @@ const UserProfile = () => {
             <h3 className="text-xl font-bold mb-4">Edit Profile</h3>
 
             <form onSubmit={handleSubmit(onSubmit)} className="grid gap-4">
-              {/* Email (always disabled) */}
-              <div>
-                <label className="label">Email</label>
-                <input
-                  type="email"
-                  {...register("email")}
-                  className="input input-bordered w-full bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200"
-                  disabled
-                />
-              </div>
-
-              {/* Name */}
-              <div>
-                <label className="label">Name</label>
-                <input
-                  type="text"
-                  {...register("name")}
-                  className="input input-bordered w-full bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200"
-                />
-              </div>
-
-              {/* Phone */}
-              <div>
-                <label className="label">Phone</label>
-                <input
-                  type="text"
-                  {...register("phone")}
-                  className="input input-bordered w-full bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200"
-                />
-              </div>
-
-              {/* Address */}
-              <div>
-                <label className="label">Address</label>
-                <input
-                  type="text"
-                  {...register("address")}
-                  className="input input-bordered w-full bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200"
-                />
-              </div>
-
-              {/* Blood Group */}
-              <div>
-                <label className="label">Blood Group</label>
-                <input
-                  type="text"
-                  {...register("bloodGroup")}
-                  className="input input-bordered w-full bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200"
-                />
-              </div>
+              <InputField label="Email" register={register("email")} disabled />
+              <InputField label="Name" register={register("name")} />
+              <InputField label="Phone" register={register("phone")} />
+              <InputField label="Address" register={register("address")} />
+              <InputField
+                label="Blood Group"
+                register={register("bloodGroup")}
+              />
 
               <div className="flex justify-end gap-4 mt-4">
                 <button
@@ -189,3 +189,26 @@ const UserProfile = () => {
 };
 
 export default UserProfile;
+
+// ✅ Small reusable components
+const ProfileRow = ({ icon, label, value }) => (
+  <div className="flex items-center gap-4">
+    {icon}
+    <div>
+      <p className="text-sm font-semibold">{label}</p>
+      <p className="text-base">{value}</p>
+    </div>
+  </div>
+);
+
+const InputField = ({ label, register, disabled = false }) => (
+  <div>
+    <label className="label">{label}</label>
+    <input
+      type="text"
+      {...register}
+      disabled={disabled}
+      className="input input-bordered w-full bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200"
+    />
+  </div>
+);

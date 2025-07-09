@@ -31,13 +31,13 @@ const DashBoardLayout = () => {
 
                 <NavLink
                   className="transition duration-300 hover:bg-blue-200 py-4 px-3 rounded-sm"
-                  to="posted-tasks"
+                  to="My-donation-request"
                 >
                   My Donation Requests
                 </NavLink>
                 <NavLink
                   className="transition duration-300 hover:bg-blue-200 py-4 px-3 rounded-sm"
-                  to="add-task"
+                  to="add-request"
                 >
                   Create Donation Request
                 </NavLink>

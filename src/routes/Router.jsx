@@ -6,6 +6,8 @@ import Contact from "../Home/Contact";
 import About from "../Home/About";
 import DashBoardLayout from "../layouts/DashBoardLayout";
 import Profile from "../DashBoard/Profile";
+import AddBloodForm from "../Form/AddBloodForm";
+import MyDonationRequests from "../DashBoard/Donor/MyDonationRequests";
 
 export const router = createBrowserRouter([
   {
@@ -17,12 +19,12 @@ export const router = createBrowserRouter([
         Component: Home,
       },
       {
-        path: '/about',
+        path: "/about",
         Component: About,
       },
       {
-        path: '/contact',
-        Component:Contact
+        path: "/contact",
+        Component: Contact,
       },
     ],
   },
@@ -32,13 +34,26 @@ export const router = createBrowserRouter([
   },
 
   {
-    path: '/dashboard',
+    path: "/dashboard",
     element: <DashBoardLayout />,
     children: [
       {
-        path: '/dashboard/profile',
-        Component: Profile
+        path: "/dashboard/profile",
+        Component: Profile,
       },
-    ]
-},
+      {
+        path: "/dashboard/add-request",
+        Component: AddBloodForm,
+      },
+
+      {
+        path: "/dashboard/My-donation-request",
+        element: (
+          
+            <MyDonationRequests />
+         
+        ),
+      },
+    ],
+  },
 ]);

@@ -1,16 +1,10 @@
+import axios from "axios";
+
 export const updateUserProfile = async (email, profileData) => {
-    const res = await fetch(`http://localhost:5000/api/users/${email}`, {
-        method: "PUT",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(profileData),
-    });
+    const res = await axios.put(
+        `http://localhost:3000/profile/${email}`,
+        profileData
+    );
 
-    if (!res.ok) {
-        throw new Error("Failed to update profile");
-    }
-
-    return res.json();
+    return res.data;
 };
-  

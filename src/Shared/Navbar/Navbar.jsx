@@ -4,12 +4,12 @@ import { MdErrorOutline } from "react-icons/md";
 import { AiOutlineMenu } from "react-icons/ai";
 import { FaUserCircle } from "react-icons/fa";
 import { AiOutlineContacts, AiOutlineLogout } from "react-icons/ai";
-import { toast } from "react-toastify";
-import LoadingSpinner from "../LoadingSpinner";
+import toast from "react-hot-toast";
 import ThemeProvider from "../../Provider/ThemeProvider";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../Provider/AuthProvider";
 import { IoHomeOutline } from "react-icons/io5";
+import LoadingSpinner from "../LoadingSpinner";
 
 const Navbar = () => {
   const { user, logout, loading } = use(AuthContext);
