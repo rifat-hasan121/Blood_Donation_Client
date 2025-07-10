@@ -35,6 +35,20 @@ const DashBoardLayout = () => {
                 >
                   Manage Users
                 </NavLink>
+                <NavLink
+                  className="transition duration-300 hover:bg-blue-200 py-4 px-3 rounded-sm"
+                  to="all-blood-donation-request"
+                  end
+                >
+                  All Request Donations
+                </NavLink>
+                <NavLink
+                  className="transition duration-300 hover:bg-blue-200 py-4 px-3 rounded-sm"
+                  to="content-management"
+                  end
+                >
+                  Content Management
+                </NavLink>
 
                 <NavLink
                   className="transition duration-300 hover:bg-blue-200 py-4 px-3 rounded-sm"

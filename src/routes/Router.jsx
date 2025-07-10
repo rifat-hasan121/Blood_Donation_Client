@@ -11,6 +11,10 @@ import MyDonationRequests from "../DashBoard/Donor/MyDonationRequests";
 import Registration from "../pages/Registration";
 import DonationRequestsDetails from "../Home/DonationRequestsDetails";
 import ManageUsers from "../DashBoard/Admin/ManageUsers";
+import AdminDashboard from "../DashBoard/Admin/AdminDashboard";
+import AllDonationRequests from "../DashBoard/Admin/AllDonationRequests";
+import ContentManagement from "../DashBoard/Admin/ContentManagement";
+import AddBlog from "../Home/AddBlog";
 
 export const router = createBrowserRouter([
   {
@@ -48,6 +52,22 @@ export const router = createBrowserRouter([
     path: "/dashboard",
     element: <DashBoardLayout />,
     children: [
+      {
+        path: "/dashboard",
+        Component: AdminDashboard
+      },
+      {
+        path: "/dashboard/all-blood-donation-request",
+        Component:AllDonationRequests
+      },
+      {
+        path:"/dashboard/content-management",
+        element: <ContentManagement />
+      },
+      {
+        path: "/dashboard/content-management/add-blog",
+        element:< AddBlog />
+    },
       {
         path: "/dashboard/profile",
         Component: Profile,
