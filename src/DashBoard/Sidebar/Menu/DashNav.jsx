@@ -33,7 +33,7 @@ const DashNav = () => {
                     id="my-anchor-element"
                     src={
                       user?.photoURL ||
-                      "https://img.daisyui.com/images/profile/demo/spiderperson@192.webp"
+                      "https://img.daisyui.com"
                     }
                     alt="avatar"
                   />

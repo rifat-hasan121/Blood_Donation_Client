@@ -8,6 +8,9 @@ import DashBoardLayout from "../layouts/DashBoardLayout";
 import Profile from "../DashBoard/Profile";
 import AddBloodForm from "../Form/AddBloodForm";
 import MyDonationRequests from "../DashBoard/Donor/MyDonationRequests";
+import Registration from "../pages/Registration";
+import DonationRequestsDetails from "../Home/DonationRequestsDetails";
+import ManageUsers from "../DashBoard/Admin/ManageUsers";
 
 export const router = createBrowserRouter([
   {
@@ -26,11 +29,19 @@ export const router = createBrowserRouter([
         path: "/contact",
         Component: Contact,
       },
+      {
+        path: "donation-request-details/:id",
+        element: <DonationRequestsDetails />,
+      },
     ],
   },
   {
     path: "/login",
     Component: Login,
+  },
+  {
+    path: "/signUp",
+    Component: Registration,
   },
 
   {
@@ -48,11 +59,11 @@ export const router = createBrowserRouter([
 
       {
         path: "/dashboard/My-donation-request",
-        element: (
-          
-            <MyDonationRequests />
-         
-        ),
+        element: <MyDonationRequests />,
+      },
+      {
+        path: "/dashboard/manage-users",
+        element: <ManageUsers />,
       },
     ],
   },

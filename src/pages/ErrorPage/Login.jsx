@@ -193,7 +193,7 @@ const Login = () => {
           </div>
           <p className="text-xs text-center sm:px-6 text-gray-600">
             Don't have an account?
-            <Link to="/register" className="underline text-blue-600">
+            <Link to="/signUp" className="underline text-blue-600">
               Register
             </Link>
           </p>

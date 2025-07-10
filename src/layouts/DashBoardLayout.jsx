@@ -28,6 +28,13 @@ const DashBoardLayout = () => {
                 >
                   Overview
                 </NavLink>
+                <NavLink
+                  className="transition duration-300 hover:bg-blue-200 py-4 px-3 rounded-sm"
+                  to="manage-users"
+                  end
+                >
+                  Manage Users
+                </NavLink>
 
                 <NavLink
                   className="transition duration-300 hover:bg-blue-200 py-4 px-3 rounded-sm"
