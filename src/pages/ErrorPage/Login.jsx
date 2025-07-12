@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import { AuthContext } from "../../Provider/AuthProvider";
 import Swal from "sweetalert2";
+import { saveUserInDB } from "../../Api/userApi";
 
 const Login = () => {
   const [error, setError] = useState("");
@@ -10,14 +11,14 @@ const Login = () => {
     loginUser,
     createUserWithLoginGoogle,
     createUserWithGithub,
-    setUser2,
+    setUser,
     resetPassword,
   } = use(AuthContext);
   const location = useLocation();
   const navigate = useNavigate();
   const emailRef = useRef();
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     const form = e.target;
     const email = form.email.value;
@@ -31,22 +32,33 @@ const Login = () => {
       return;
     }
 
-    loginUser(email, password)
-      .then((result) => {
-        const user = result.user;
+  try {
+    const result = await loginUser(email, password);
+    console.log(result);
 
-        navigate(`${location.state ? location.state : "/"}`);
-        Swal.fire({
-          title: `${user.displayName} log in Successfully!`,
-          icon: "success",
-          draggable: true,
-        });
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        setError(errorCode, errorMessage);
-      });
+    const user = result.user;
+
+    // Optional: userData prepare করে DB তে save করতে চাইলে uncomment করো
+    // const userData = {
+    //   name: user?.displayName,
+    //   email: user?.email,
+    //   image: user?.photoURL
+    // };
+    // await saveUserInDB(userData);
+
+    navigate(`${location.state ? location.state : "/"}`);
+    Swal.fire({
+      title: `${user.displayName} log in Successfully!`,
+      icon: "success",
+      draggable: true,
+    });
+  } catch (error) {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    setError(errorCode, errorMessage);
+  }
+
+
   };
 
   const handleLoginWithGoogle = () => {
@@ -74,7 +86,7 @@ const Login = () => {
     createUserWithGithub()
       .then((result) => {
         const user = result.user;
-        setUser2(user);
+        setUser(user);
 
         navigate(`${location.state ? location.state : "/"}`);
         Swal.fire({

@@ -4,6 +4,7 @@ import JoditEditor from "jodit-react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router";
 import useAxiosSecure from "../Hooks/useAxiosSecure";
+import { imageUpload } from "../Api/utlis";
 
 const AddBlog = () => {
   const [title, setTitle] = useState("");
@@ -20,26 +21,14 @@ const AddBlog = () => {
     const file = event.target.files[0];
     if (!file) return;
 
-    const formData = new FormData();
-    formData.append("image", file);
-
     try {
-        setUploading(true);
+      setUploading(true);
 
-        const response = await fetch(
-          `https://api.imgbb.com/1/upload?key=${
-            import.meta.env.VITE_IMGBB_API_KEY
-          }`,
-          {
-            method: "POST",
-            body: formData,
-          }
-        );
-        
+      // Call your reusable imageUpload function
+      const uploadedImageUrl = await imageUpload(file);
 
-      const data = await response.json();
-      if (data.success) {
-        setThumbnailUrl(data.data.url);
+      if (uploadedImageUrl) {
+        setThumbnailUrl(uploadedImageUrl);
         toast.success("Image uploaded successfully!");
       } else {
         toast.error("Image upload failed!");
@@ -51,7 +40,6 @@ const AddBlog = () => {
       setUploading(false);
     }
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
