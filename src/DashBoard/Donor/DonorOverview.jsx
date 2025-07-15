@@ -7,7 +7,7 @@ import {
   FaTrashAlt,
   FaClock,
   FaCheckCircle,
-  FaTimesCircle,
+  FaSpinner,
 } from "react-icons/fa";
 
 const DonorOverview = () => {
@@ -29,6 +29,36 @@ const DonorOverview = () => {
   if (loading) return <LoadingSpinner />;
 
   const latestRequests = requests.slice(0, 3);
+
+  const getStatusBadge = (status) => {
+    switch (status?.toLowerCase()) {
+      case "pending":
+        return (
+          <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm font-semibold bg-yellow-100 text-yellow-800">
+            <FaClock /> Pending
+          </span>
+        );
+      case "inprogress":
+        return (
+          <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm font-semibold bg-blue-100 text-blue-800">
+            <FaSpinner className="animate-spin-slow" /> In Progress
+          </span>
+        );
+
+      case "done":
+        return (
+          <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm font-semibold bg-green-100 text-green-800">
+            <FaCheckCircle /> Done
+          </span>
+        );
+      default:
+        return (
+          <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm font-semibold bg-gray-200 text-gray-700">
+            {status}
+          </span>
+        );
+    }
+  };
 
   return (
     <div className="p-6 rounded-xl bg-white shadow-lg mb-8">
@@ -63,20 +93,7 @@ const DonorOverview = () => {
                   </span>
                 </p>
                 <div className="flex justify-between items-center">
-                  <span
-                    className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm font-semibold ${
-                      req.status === "pending"
-                        ? "bg-yellow-100 text-yellow-800"
-                        : req.status === "approved"
-                        ? "bg-green-100 text-green-800"
-                        : "bg-red-100 text-red-800"
-                    }`}
-                  >
-                    {req.status === "pending" && <FaClock />}
-                    {req.status === "approved" && <FaCheckCircle />}
-                    {req.status === "rejected" && <FaTimesCircle />}
-                    {req.status}
-                  </span>
+                  {getStatusBadge(req.status)}
                   <div className="flex space-x-2">
                     <button
                       title="Edit"
