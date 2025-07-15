@@ -17,7 +17,9 @@ const DashNav = () => {
         <div>
           <h3 className="text-2xl md:text-4xl font-bold flex items-center gap-2">
             Welcome{" "}
-            <span className="text-primary">{user?.displayName || "User"}</span>
+            <span className="text-primary">
+              {user?.name || user?.displayName || "Unknown User"}
+            </span>
           </h3>
         </div>
         <div className="flex items-center gap-4">
@@ -28,10 +30,7 @@ const DashNav = () => {
           <div>
             {user && (
               <div className="relative hidden md:flex">
-                <div
-                 
-                  className="cursor-pointer ring-primary ring-offset-base-100 w-10 rounded-full ring-2 ring-offset-2"
-                >
+                <div className="cursor-pointer ring-primary ring-offset-base-100 w-10 rounded-full ring-2 ring-offset-2">
                   <img
                     id="my-anchor-element"
                     src={user?.photoURL || "https://img.daisyui.com"}
@@ -40,7 +39,7 @@ const DashNav = () => {
                   />
                   <Tooltip
                     anchorSelect="#my-anchor-element"
-                    content={`${user?.displayName || "User"}`}
+                    content={user?.name || user?.displayName || "Unknown User"}
                   />
                 </div>
               </div>

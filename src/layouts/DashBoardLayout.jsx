@@ -137,6 +137,7 @@ import LoadingSpinner from "../Shared/LoadingSpinner";
 
 const DashBoardLayout = () => {
   const { user } = useAuth();
+  console.log(user)
   const [userRole, setUserRole] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -210,10 +211,7 @@ const DashBoardLayout = () => {
             {/* Donor Routes */}
             {userRole === "donor" && (
               <>
-                <NavLink
-                  to="/dashboard/overview"
-                  className={navLinkClass}
-                >
+                <NavLink to="/dashboard/overview" className={navLinkClass}>
                   Dashboard
                 </NavLink>
                 <NavLink
@@ -231,6 +229,9 @@ const DashBoardLayout = () => {
             {/* Volunteer Routes */}
             {userRole === "volunteer" && (
               <>
+                <NavLink className={navLinkClass} to="/dashboard" end>
+                  Overview
+                </NavLink>
                 <NavLink
                   to="/dashboard/all-blood-donation-request"
                   className={navLinkClass}

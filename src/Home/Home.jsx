@@ -3,6 +3,7 @@ import Banner from './Banner';
 import Blogs from './Blogs';
 import DonateBlood from './DonateBlood';
 import BloodDonateRequests from './BloodDonateRequests';
+import WhyDonate from './WhyDonate';
 
 const Home = () => {
     return (
@@ -25,6 +26,12 @@ const Home = () => {
             <h3 className='text-xl md:text-3xl font-bold text-center py-12'>Urgent Blood Donation Requests</h3>
           </div>
           <BloodDonateRequests />
+        </section>
+        {/* why donate */}
+        <section>
+          <div>
+            <WhyDonate/>
+          </div>
         </section>
       </div>
     );

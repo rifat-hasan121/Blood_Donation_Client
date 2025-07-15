@@ -163,6 +163,7 @@ export const router = createBrowserRouter([
         index: true,
         element: <AdminDashboard />,
       },
+
       // Admin Routes
       {
         element: <RoleBasedRoute allowedRoles={["admin"]} />,
@@ -176,22 +177,19 @@ export const router = createBrowserRouter([
             element: <AllDonationRequests />,
           },
           {
-            path: "content-management",
-            element: <ContentManagement />,
-          },
-          {
             path: "add-blog",
             element: <AddBlog />,
           },
         ],
       },
+
       // Donor Routes
       {
         element: <RoleBasedRoute allowedRoles={["donor"]} />,
         children: [
           {
             path: "overview",
-            element: <DonorOverview/>,
+            element: <DonorOverview />,
           },
           {
             path: "my-donation-request",
@@ -203,7 +201,19 @@ export const router = createBrowserRouter([
           },
         ],
       },
-      // Volunteer Routes
+
+      // Shared Content Management Route for both admin and volunteer
+      {
+        element: <RoleBasedRoute allowedRoles={["admin", "volunteer"]} />,
+        children: [
+          {
+            path: "content-management",
+            element: <ContentManagement />,
+          },
+        ],
+      },
+
+      // Volunteer Routes (excluding content-management, since shared above)
       {
         element: <RoleBasedRoute allowedRoles={["volunteer"]} />,
         children: [
@@ -211,12 +221,9 @@ export const router = createBrowserRouter([
             path: "all-blood-donation-request",
             element: <AllDonationRequests />,
           },
-          {
-            path: "content-management",
-            element: <ContentManagement />,
-          },
         ],
       },
+
       // Common Profile Route
       {
         element: (

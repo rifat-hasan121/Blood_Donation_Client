@@ -149,7 +149,7 @@ const Navbar = () => {
                         referrerPolicy="no-referrer"
                       />
                       <p className="font-semibold text-gray-700">
-                        {user.displayName || "User"}
+                        {user?.name || user?.displayName || "Unknown User"}
                       </p>
                     </div>
                   )}
