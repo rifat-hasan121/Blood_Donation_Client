@@ -9,6 +9,7 @@ import LoadingSpinner from "../Shared/LoadingSpinner";
 
 const UserProfile = () => {
   const { user, updateUser, loading } = useContext(AuthContext);
+  console.log(user)
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
@@ -113,8 +114,8 @@ const UserProfile = () => {
           {user?.name || user?.displayName || "Unknown User"}
         </h2>
         <div className="mt-2 flex justify-center gap-3">
-          <span className="badge badge-error">donor</span>
-          <span className="badge badge-success">active</span>
+          <span className="badge badge-error">{user?.role|| "N/A"}</span>
+          <span className="badge badge-success">{user?.status || "N/A"}</span>
         </div>
       </div>
 

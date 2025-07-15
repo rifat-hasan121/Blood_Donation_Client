@@ -21,7 +21,6 @@ const Registration = () => {
   const {
     register,
     handleSubmit,
-    watch,
     reset,
     formState: { errors },
   } = useForm();
@@ -29,170 +28,177 @@ const Registration = () => {
   const [district, setDistrict] = useState("");
   const [upazilas, setUpazilas] = useState([]);
 
-  const districtsAndUpazilas = {
-    Dhaka: [
-      "Savar",
-      "Dhamrai",
-      "Keraniganj",
-      "Nawabganj",
-      "Demra",
-      "Tongi",
-      "Shibpur",
-      "Siddhirganj",
-      "Narayanganj",
-    ],
-    Chittagong: [
-      "Patiya",
-      "Sitakunda",
-      "Boalkhali",
-      "Rangunia",
-      "Anwara",
-      "Fatikchhari",
-      "Mirsharai",
-      "Lohagara",
-      "Banshkhali",
-      "Sandwip",
-    ],
-    Rajshahi: [
-      "Paba",
-      "Durgapur",
-      "Charghat",
-      "Bagha",
-      "Mohonpur",
-      "Tanore",
-      "Godagari",
-      "Shibganj",
-      "Niamatpur",
-    ],
-    Khulna: [
-      "Batiaghata",
-      "Dacope",
-      "Dumuria",
-      "Koyra",
-      "Terokhada",
-      "Paikgachha",
-      "Kalaroa",
-      "Shyamnagar",
-      "Assasuni",
-    ],
-    Barishal: [
-      "Bakerganj",
-      "Barisal Sadar",
-      "Agailjhara",
-      "Muladi",
-      "Banaripara",
-      "Wazirpur",
-      "Gournadi",
-      "Uzirpur",
-      "Kalapara",
-    ],
-    Sylhet: [
-      "Moulvibazar",
-      "Rajnagar",
-      "Juri",
-      "Kulaura",
-      "Sreemangal",
-      "Fenchuganj",
-      "Balaganj",
-      "Gowainghat",
-      "Companiganj",
-    ],
-    Rangpur: [
-      "Kurigram",
-      "Gaibandha",
-      "Lalmonirhat",
-      "Nilphamari",
-      "Rangpur Sadar",
-      "Kachdana",
-      "Pirganj",
-      "Pirgachha",
-      "Badarganj",
-    ],
-    Khagrachari: [
-      "Dighinala",
-      "Lakshmipur",
-      "Manikchhari",
-      "Mahalchhari",
-      "Madhupur",
-      "Mohalchhari",
-      "Khagrachhari Sadar",
-    ],
-    Comilla: [
-      "Laksam",
-      "Titas",
-      "Muradnagar",
-      "Debidwar",
-      "Monohorgonj",
-      "Kamalnagar",
-      "Comilla Sadar",
-      "Nangalkot",
-    ],
-    Jessore: [
-      "Abhaynagar",
-      "Chaugachha",
-      "Keshabpur",
-      "Jessore Sadar",
-      "Benapole",
-      "Shashibhushon",
-      "Bagherpara",
-      "Jhikargachha",
-    ],
-    Mymensingh: [
-      "Mymensingh Sadar",
-      "Trishal",
-      "Haluaghat",
-      "Fulbaria",
-      "Phulpur",
-      "Gafargaon",
-      "Nandail",
-      "Bhaluka",
-      "Kishoreganj",
-    ],
-    Noakhali: [
-      "Begumganj",
-      "Chatkhil",
-      "Companiganj",
-      "Senbagh",
-      "Haimchar",
-      "Noakhali Sadar",
-      "Chhagalnaiya",
-    ],
-    Madaripur: ["Madaripur Sadar", "Shibchar", "Rajoir", "Kalkini", "Lohajang"],
-    Shariatpur: [
-      "Shariatpur Sadar",
-      "Naria",
-      "Gosairhat",
-      "Bhedarganj",
-      "Zinzira",
-      "Chandpur",
-    ],
-    Chuadanga: [
-      "Chaudanga",
-      "Maheshpur",
-      "Shyamnagar",
-      "Bhandaria",
-      "Khanjahan Ali",
-      "Bagerhat",
-    ],
-    Sunamganj: [
-      "Jagannathpur",
-      "Chhatak",
-      "Dasmina",
-      "Shalla",
-      "Sadar",
-      "Moulvibazar",
-    ],
-    Bogura: [
-      "Sadar",
-      "Sherpur",
-      "Shibganj",
-      "Gabtali",
-      "Kahaloo",
-      "Khetlal",
-      "Dhunat",
-      "Nandigram",
-    ],
-  };
+    const districtsAndUpazilas = {
+      Dhaka: [
+        "Savar",
+        "Dhamrai",
+        "Keraniganj",
+        "Nawabganj",
+        "Demra",
+        "Tongi",
+        "Shibpur",
+        "Siddhirganj",
+        "Narayanganj",
+      ],
+      Chittagong: [
+        "Patiya",
+        "Sitakunda",
+        "Boalkhali",
+        "Rangunia",
+        "Anwara",
+        "Fatikchhari",
+        "Mirsharai",
+        "Lohagara",
+        "Banshkhali",
+        "Sandwip",
+      ],
+      Rajshahi: [
+        "Paba",
+        "Durgapur",
+        "Charghat",
+        "Bagha",
+        "Mohonpur",
+        "Tanore",
+        "Godagari",
+        "Shibganj",
+        "Niamatpur",
+      ],
+      Khulna: [
+        "Batiaghata",
+        "Dacope",
+        "Dumuria",
+        "Koyra",
+        "Terokhada",
+        "Paikgachha",
+        "Kalaroa",
+        "Shyamnagar",
+        "Assasuni",
+      ],
+      Barishal: [
+        "Bakerganj",
+        "Barisal Sadar",
+        "Agailjhara",
+        "Muladi",
+        "Banaripara",
+        "Wazirpur",
+        "Gournadi",
+        "Uzirpur",
+        "Kalapara",
+      ],
+      Sylhet: [
+        "Moulvibazar",
+        "Rajnagar",
+        "Juri",
+        "Kulaura",
+        "Sreemangal",
+        "Fenchuganj",
+        "Balaganj",
+        "Gowainghat",
+        "Companiganj",
+      ],
+      Rangpur: [
+        "Kurigram",
+        "Gaibandha",
+        "Lalmonirhat",
+        "Nilphamari",
+        "Rangpur Sadar",
+        "Kachdana",
+        "Pirganj",
+        "Pirgachha",
+        "Badarganj",
+      ],
+      Khagrachari: [
+        "Dighinala",
+        "Lakshmipur",
+        "Manikchhari",
+        "Mahalchhari",
+        "Madhupur",
+        "Mohalchhari",
+        "Khagrachhari Sadar",
+      ],
+      Comilla: [
+        "Laksam",
+        "Titas",
+        "Muradnagar",
+        "Debidwar",
+        "Monohorgonj",
+        "Kamalnagar",
+        "Comilla Sadar",
+        "Nangalkot",
+      ],
+      Jessore: [
+        "Abhaynagar",
+        "Chaugachha",
+        "Keshabpur",
+        "Jessore Sadar",
+        "Benapole",
+        "Shashibhushon",
+        "Bagherpara",
+        "Jhikargachha",
+      ],
+      Mymensingh: [
+        "Mymensingh Sadar",
+        "Trishal",
+        "Haluaghat",
+        "Fulbaria",
+        "Phulpur",
+        "Gafargaon",
+        "Nandail",
+        "Bhaluka",
+        "Kishoreganj",
+      ],
+      Noakhali: [
+        "Begumganj",
+        "Chatkhil",
+        "Companiganj",
+        "Senbagh",
+        "Haimchar",
+        "Noakhali Sadar",
+        "Chhagalnaiya",
+      ],
+      Madaripur: [
+        "Madaripur Sadar",
+        "Shibchar",
+        "Rajoir",
+        "Kalkini",
+        "Lohajang",
+      ],
+      Shariatpur: [
+        "Shariatpur Sadar",
+        "Naria",
+        "Gosairhat",
+        "Bhedarganj",
+        "Zinzira",
+        "Chandpur",
+      ],
+      Chuadanga: [
+        "Chaudanga",
+        "Maheshpur",
+        "Shyamnagar",
+        "Bhandaria",
+        "Khanjahan Ali",
+        "Bagerhat",
+      ],
+      Sunamganj: [
+        "Jagannathpur",
+        "Chhatak",
+        "Dasmina",
+        "Shalla",
+        "Sadar",
+        "Moulvibazar",
+      ],
+      Bogura: [
+        "Sadar",
+        "Sherpur",
+        "Shibganj",
+        "Gabtali",
+        "Kahaloo",
+        "Khetlal",
+        "Dhunat",
+        "Nandigram",
+      ],
+    };
+
 
   const handleDistrictChange = (e) => {
     const selectedDistrict = e.target.value;
@@ -222,7 +228,7 @@ const Registration = () => {
         photoURL = await imageUpload(data.image[0]);
       }
 
-      const result = await createUser(email, password);
+      await createUser(email, password);
       await updateUser(name, photoURL);
 
       const userData = {
@@ -230,11 +236,12 @@ const Registration = () => {
         email,
         photoURL,
         bloodGroup,
-        district,
-        upazila,
+        district: district || "",
+        upazila: upazila || "",
         phone: "",
         address: "",
         role: "donor",
+        status: "active"
       };
 
       await fetch("http://localhost:3000/users", {
@@ -244,11 +251,10 @@ const Registration = () => {
         },
         body: JSON.stringify(userData),
       });
-      
 
       setUser(userData);
-
       toast.success("Signup Successful");
+      reset();
       navigate("/dashboard/profile");
     } catch (err) {
       console.error(err);
@@ -270,9 +276,10 @@ const Registration = () => {
         phone: "",
         address: "",
         role: "donor",
+        status: "active",
       };
 
-      await fetch(`http://localhost:3000/profile`, {
+      await fetch("http://localhost:3000/users", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -281,9 +288,8 @@ const Registration = () => {
       });
 
       setUser(userData);
-
       toast.success("Signup Successful");
-      navigate("/profile");
+      navigate("/dashboard/profile");
     } catch (err) {
       console.log(err);
       toast.error(err?.message);
@@ -343,6 +349,12 @@ const Registration = () => {
                 <option value="">Select Blood Group</option>
                 <option value="A+">A+</option>
                 <option value="B+">B+</option>
+                <option value="AB+">AB+</option>
+                <option value="O+">O+</option>
+                <option value="A-">A-</option>
+                <option value="B-">B-</option>
+                <option value="AB-">AB-</option>
+                <option value="O-">O-</option>
               </select>
             </div>
 
@@ -351,7 +363,7 @@ const Registration = () => {
                 District
               </label>
               <select
-                {...register("district", { required: true })}
+                {...register("district")}
                 onChange={handleDistrictChange}
                 className="w-full px-3 py-2 border rounded-md border-red-300"
               >
@@ -369,7 +381,7 @@ const Registration = () => {
                 Upazila
               </label>
               <select
-                {...register("upazila", { required: true })}
+                {...register("upazila")}
                 className="w-full px-3 py-2 border rounded-md border-red-300"
               >
                 <option value="">Select Upazila</option>

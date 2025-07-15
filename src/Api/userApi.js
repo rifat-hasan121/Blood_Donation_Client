@@ -11,8 +11,3 @@ export const updateUserProfile = async (email, profileData) => {
 
 // save or update user in db
 
-export const saveUserInDB = async user => {
-
-    const { data } = await axios.post(`${import.meta.env.VITE_API_URI}/users`, user)
-    console.log(data);
-}

@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types'
-import useAuth from '../Hoooks/useAuth'
-import { Navigate, useLocation } from 'react-router-dom'
+import {useContext,} from 'react'
+import { Navigate, useLocation } from 'react-router'
 import LoadingSpinner from '../Shared/LoadingSpinner'
+import {  AuthContext} from "../Provider/AuthProvider";
 
 const PrivateRoute = ({ children }) => {
-  const { user, loading } = useAuth()
+  const { user, loading } = useContext(AuthContext)
   const location = useLocation()
 
   if (loading) return <LoadingSpinner />

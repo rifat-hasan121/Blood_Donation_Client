@@ -5,6 +5,7 @@ import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 const ManageUsers = () => {
   const { user } = useContext(AuthContext);
+  
   const axiosSecure = useAxiosSecure();
 
   const [users, setUsers] = useState([]);

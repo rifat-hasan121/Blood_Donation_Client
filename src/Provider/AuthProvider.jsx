@@ -62,35 +62,80 @@ const AuthProvider = ({ children }) => {
     }));
   };
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
-      console.log("current user", currentUser?.email);
-      setUser(currentUser);
-      // if (currentUser.email) {
+  // useEffect(() => {
+  //   const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+  //     console.log("current user", currentUser?.email);
+  //     setUser(currentUser);
+  //     // if (currentUser.email) {
         
 
-      //   // get jwt token
-      //   await axios.post(
-      //     `${import.meta.env.VITE_API_URI}/jwt`,
-      //     {
-      //       email: currentUser?.email,
-      //     },
-      //     { withCredentials: true }
-      //   );
-      // } else {
-      //   setUser(currentUser);
-      //   await axios.get(`${import.meta.env.VITE_API_URI}/logout`, {
-      //     withCredentials: true,
-      //   });
-      // }
+  //     //   // get jwt token
+  //     //   await axios.post(
+  //     //     `${import.meta.env.VITE_API_URI}/jwt`,
+  //     //     {
+  //     //       email: currentUser?.email,
+  //     //     },
+  //     //     { withCredentials: true }
+  //     //   );
+  //     // } else {
+  //     //   setUser(currentUser);
+  //     //   await axios.get(`${import.meta.env.VITE_API_URI}/logout`, {
+  //     //     withCredentials: true,
+  //     //   });
+  //     // }
 
-      setLoading(false);
-    });
-    return () => {
-      unsubscribe();
-    };
-  }, []);
+  //     setLoading(false);
+  //   });
+  //   return () => {
+  //     unsubscribe();
+  //   };
+  // }, []);
 
+    useEffect(() => {
+      const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+        console.log("current user", currentUser?.email);
+
+        if (currentUser?.email) {
+          try {
+            // get jwt token
+            await axios.post(
+              `${import.meta.env.VITE_API_URI}/jwt`,
+              { email: currentUser.email },
+              { withCredentials: true }
+            );
+
+            // fetch user role
+            const res = await axios.get(
+              `${import.meta.env.VITE_API_URI}/users/role/${currentUser.email}`
+            );
+
+            console.log("User role fetched:", res.data);
+
+            setUser({
+              email: currentUser.email,
+              displayName: currentUser.displayName || "User",
+              photoURL: currentUser.photoURL || "https://img.daisyui.com",
+              uid: currentUser.uid,
+              role: res.data.role,
+            });
+          } catch (error) {
+            console.error("Error during auth setup:", error);
+            setUser(null);
+          }
+        } else {
+          setUser(null);
+          await axios.get(`${import.meta.env.VITE_API_URI}/logout`, {
+            withCredentials: true,
+          });
+        }
+
+        setLoading(false);
+      });
+
+      return () => {
+        unsubscribe();
+      };
+    }, []);
   const authData = {
     user,
     setUser,
