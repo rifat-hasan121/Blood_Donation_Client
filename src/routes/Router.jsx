@@ -110,6 +110,8 @@ import AddBlog from "../Home/AddBlog";
 import { use } from "react";
 import { AuthContext } from "../Provider/AuthProvider";
 import DonorOverview from "../DashBoard/Donor/DonorOverview";
+import PrivateRoute from "./PrivateRoute";
+import AllDonations from "../pages/ AllDonations";
 
 // Role Based Route Component
 const RoleBasedRoute = ({ allowedRoles }) => {
@@ -132,6 +134,10 @@ export const router = createBrowserRouter([
       {
         index: true,
         element: <Home />,
+      },
+      {
+        path: "/all-donations",
+        element: <AllDonations />
       },
       {
         path: "about",
@@ -157,11 +163,19 @@ export const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: <DashBoardLayout />,
+    element: (
+      <PrivateRoute>
+        <DashBoardLayout />
+      </PrivateRoute>
+    ),
     children: [
       {
         index: true,
-        element: <AdminDashboard />,
+        element: (
+          <PrivateRoute>
+            <AdminDashboard />
+          </PrivateRoute>
+        ),
       },
 
       // Admin Routes
@@ -170,15 +184,19 @@ export const router = createBrowserRouter([
         children: [
           {
             path: "manage-users",
-            element: <ManageUsers />,
+            element: (
+              <PrivateRoute>
+                <ManageUsers />
+              </PrivateRoute>
+            ),
           },
           {
             path: "all-request-donations",
-            element: <AllDonationRequests />,
-          },
-          {
-            path: "add-blog",
-            element: <AddBlog />,
+            element: (
+              <PrivateRoute>
+                <AllDonationRequests />
+              </PrivateRoute>
+            ),
           },
         ],
       },
@@ -189,15 +207,27 @@ export const router = createBrowserRouter([
         children: [
           {
             path: "overview",
-            element: <DonorOverview />,
+            element: (
+              <PrivateRoute>
+                <DonorOverview />
+              </PrivateRoute>
+            ),
           },
           {
             path: "my-donation-request",
-            element: <MyDonationRequests />,
+            element: (
+              <PrivateRoute>
+                <MyDonationRequests />
+              </PrivateRoute>
+            ),
           },
           {
             path: "add-request",
-            element: <AddBloodForm />,
+            element: (
+              <PrivateRoute>
+                <AddBloodForm />
+              </PrivateRoute>
+            ),
           },
         ],
       },
@@ -208,8 +238,24 @@ export const router = createBrowserRouter([
         children: [
           {
             path: "content-management",
-            element: <ContentManagement />,
+            element: (
+              <PrivateRoute>
+                <ContentManagement />
+              </PrivateRoute>
+            ),
           },
+
+          {
+            path: "add-blog",
+            element: (
+              <PrivateRoute>
+                <AddBlog />
+              </PrivateRoute>
+            ),
+          },
+          {
+            path:"/dashboard/edit-blog/:id", element:<AddBlog />
+          }
         ],
       },
 
@@ -219,7 +265,11 @@ export const router = createBrowserRouter([
         children: [
           {
             path: "all-blood-donation-request",
-            element: <AllDonationRequests />,
+            element: (
+              <PrivateRoute>
+                <AllDonationRequests />
+              </PrivateRoute>
+            ),
           },
         ],
       },
@@ -232,7 +282,11 @@ export const router = createBrowserRouter([
         children: [
           {
             path: "profile",
-            element: <Profile />,
+            element: (
+              <PrivateRoute>
+                <Profile />
+              </PrivateRoute>
+            ),
           },
         ],
       },

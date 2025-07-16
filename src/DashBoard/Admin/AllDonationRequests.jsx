@@ -1,10 +1,13 @@
+
 import React, { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import toast from "react-hot-toast";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import LoadingSpinner from "../../Shared/LoadingSpinner";
+import useAuth from "../../Api/useAuth";
 
 const AllDonationRequests = () => {
+  const { user } = useAuth();
   const [requests, setRequests] = useState([]);
   const [filteredRequests, setFilteredRequests] = useState([]);
   const [statusFilter, setStatusFilter] = useState("all");
@@ -20,6 +23,7 @@ const AllDonationRequests = () => {
       try {
         const response = await axiosSecure.get("/donation-requests");
         setRequests(response.data);
+        console.log(response.data)
         setLoading(false);
       } catch (error) {
         console.error("Error fetching donation requests:", error);
@@ -31,19 +35,15 @@ const AllDonationRequests = () => {
     fetchRequests();
   }, [axiosSecure]);
 
-  // Apply status filter whenever requests or filter changes
+  // Filter requests whenever filter changes
   useEffect(() => {
-    let newFilteredRequests = [];
-
     if (statusFilter === "all") {
-      newFilteredRequests = requests;
+      setFilteredRequests(requests);
     } else {
-      newFilteredRequests = requests.filter(
-        (request) => request.status === statusFilter
+      setFilteredRequests(
+        requests.filter((request) => request.status === statusFilter)
       );
     }
-
-    setFilteredRequests(newFilteredRequests);
   }, [requests, statusFilter]);
 
   const handleStatusFilterChange = (event) => {
@@ -79,12 +79,25 @@ const AllDonationRequests = () => {
       try {
         await axiosSecure.delete(`/donation-requests/${id}`);
         toast.success("Donation request deleted successfully!");
-
-        // Remove deleted request from UI
         setRequests((prev) => prev.filter((request) => request._id !== id));
       } catch (err) {
         toast.error("Failed to delete the donation request!");
       }
+    }
+  };
+
+  const handleStatusUpdate = async (id, newStatus) => {
+    try {
+      await axiosSecure.put(`/donation-requests/${id}`, { status: newStatus });
+      setRequests((prev) =>
+        prev.map((request) =>
+          request._id === id ? { ...request, status: newStatus } : request
+        )
+      );
+      toast.success(`Status updated to "${newStatus}"`);
+    } catch (error) {
+      console.error("Failed to update status:", error);
+      toast.error("Failed to update status.");
     }
   };
 
@@ -103,7 +116,7 @@ const AllDonationRequests = () => {
         >
           <option value="all">All</option>
           <option value="Pending">Pending</option>
-          <option value="InProgress">In Progress</option>
+          <option value="InProgress">InProgress</option>
           <option value="Done">Done</option>
           <option value="Canceled">Canceled</option>
         </select>
@@ -113,32 +126,34 @@ const AllDonationRequests = () => {
       <table className="min-w-full table-auto border-collapse">
         <thead>
           <tr>
-            <th className=" bg-gray-300 dark:bg-gray-600 dark:text-white px-4 py-2">
+            <th className="bg-gray-300 dark:bg-gray-600 dark:text-white px-4 py-2">
               Recipient Name
             </th>
-            <th className=" bg-gray-300 dark:bg-gray-600 dark:text-white px-4 py-2">
+            <th className="bg-gray-300 dark:bg-gray-600 dark:text-white px-4 py-2">
               Blood Group
             </th>
-            <th className=" bg-gray-300 dark:bg-gray-600 dark:text-white px-4 py-2">
+            <th className="bg-gray-300 dark:bg-gray-600 dark:text-white px-4 py-2">
               Hospital
             </th>
-            <th className=" bg-gray-300 dark:bg-gray-600 dark:text-white px-4 py-2">
+            <th className="bg-gray-300 dark:bg-gray-600 dark:text-white px-4 py-2">
               Requester Email
             </th>
-            <th className=" bg-gray-300 dark:bg-gray-600 dark:text-white px-4 py-2">
+            <th className="bg-gray-300 dark:bg-gray-600 dark:text-white px-4 py-2">
               Status
             </th>
-            <th className=" bg-gray-300 dark:bg-gray-600 dark:text-white px-4 py-2">
-              Actions
-            </th>
+            {user?.role === "admin" && (
+              <th className="bg-gray-300 dark:bg-gray-600 dark:text-white px-4 py-2">
+                Actions
+              </th>
+            )}
           </tr>
         </thead>
         <tbody>
           {currentRequests.length > 0 ? (
             currentRequests.map((request) => (
               <tr key={request._id}>
-                <td className=" bg-gray-200 text-center dark:bg-gray-500 dark:text-white px-4 py-2">
-                  {request.recipientName}
+                <td className="bg-gray-200 text-center dark:bg-gray-500 dark:text-white px-4 py-2">
+                  {request.recipientName || "N/A"}
                 </td>
                 <td className="bg-gray-200 text-center dark:bg-gray-500 dark:text-white px-4 py-2">
                   {request.bloodGroup}
@@ -150,22 +165,35 @@ const AllDonationRequests = () => {
                   {request.requesterEmail}
                 </td>
                 <td className="bg-gray-200 text-center dark:bg-gray-500 dark:text-white px-4 py-2">
-                  {request.status}
-                </td>
-                <td className="bg-gray-200 text-center dark:bg-gray-500 dark:text-white px-4 py-2">
-                  <button
-                    onClick={() => deleteDonationRequest(request._id)}
-                    className="text-red-500 hover:text-red-700"
+                  <select
+                    value={request.status}
+                    onChange={(e) =>
+                      handleStatusUpdate(request._id, e.target.value)
+                    }
+                    className="bg-white dark:bg-gray-700 text-black dark:text-white rounded px-2 py-1"
                   >
-                    Delete
-                  </button>
+                    <option value="Pending">Pending</option>
+                    <option value="InProgress">InProgress</option>
+                    <option value="Done">Done</option>
+                    <option value="Canceled">Canceled</option>
+                  </select>
                 </td>
+                {user?.role === "admin" && (
+                  <td className="bg-gray-200 text-center dark:bg-gray-500 dark:text-white px-4 py-2">
+                    <button
+                      onClick={() => deleteDonationRequest(request._id)}
+                      className="text-red-500 hover:text-red-700"
+                    >
+                      Delete
+                    </button>
+                  </td>
+                )}
               </tr>
             ))
           ) : (
             <tr>
               <td
-                colSpan="6"
+                colSpan={user?.role === "admin" ? 6 : 5}
                 className="bg-gray-200 dark:bg-gray-500 dark:text-white px-4 py-2 text-center"
               >
                 No requests found

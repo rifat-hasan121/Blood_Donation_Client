@@ -1,8 +1,8 @@
 // src/pages/Dashboard/AddBlog.jsx
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import JoditEditor from "jodit-react";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import useAxiosSecure from "../Hooks/useAxiosSecure";
 import { imageUpload } from "../Api/utlis";
 
@@ -11,64 +11,98 @@ const AddBlog = () => {
   const [thumbnailUrl, setThumbnailUrl] = useState("");
   const [content, setContent] = useState("");
   const [uploading, setUploading] = useState(false);
+  const [isEditMode, setIsEditMode] = useState(false);
 
+  const editor = useRef(null);
   const navigate = useNavigate();
   const axiosSecure = useAxiosSecure();
-  const editor = useRef(null);
+  const { id } = useParams(); // if id exists → edit mode
 
-  // Handle thumbnail upload to ImgBB
+  // Load blog data if in edit mode
+  useEffect(() => {
+    const fetchBlog = async () => {
+      if (id) {
+        try {
+          const res = await axiosSecure.get(`/blogs`);
+          const blog = res.data.find((b) => b._id === id);
+          if (blog) {
+            setTitle(blog.title);
+            setThumbnailUrl(blog.thumbnail);
+            setContent(blog.content);
+            setIsEditMode(true);
+          } else {
+            toast.error("Blog not found");
+            navigate("/dashboard/content-management");
+          }
+        } catch (err) {
+          console.error(err);
+          toast.error("Failed to load blog");
+        }
+      }
+    };
+    fetchBlog();
+  }, [id, axiosSecure, navigate]);
+
   const handleImageUpload = async (event) => {
     const file = event.target.files[0];
     if (!file) return;
 
     try {
       setUploading(true);
-
-      // Call your reusable imageUpload function
       const uploadedImageUrl = await imageUpload(file);
-
       if (uploadedImageUrl) {
         setThumbnailUrl(uploadedImageUrl);
-        toast.success("Image uploaded successfully!");
+        toast.success("Image uploaded");
       } else {
-        toast.error("Image upload failed!");
+        toast.error("Upload failed");
       }
     } catch (error) {
-      console.error(error);
-      toast.error("Image upload error.");
+      toast.error("Upload error");
     } finally {
       setUploading(false);
     }
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!title || !thumbnailUrl || !content) {
-      toast.error("All fields are required.");
+      toast.error("All fields are required");
       return;
     }
 
-    try {
-      const blogData = {
-        title,
-        thumbnail: thumbnailUrl,
-        content,
-        status: "draft",
-        createdAt: new Date(),
-      };
+    const blogData = {
+      title,
+      thumbnail: thumbnailUrl,
+      content,
+      status: "draft",
+      createdAt: new Date(),
+    };
 
-      await axiosSecure.post("/blogs", blogData);
-      toast.success("Blog created successfully!");
+    try {
+      if (isEditMode) {
+        await axiosSecure.put(`/blogs/${id}`, {
+          ...blogData,
+          status: "draft", // optional: always reset status
+        });
+        toast.success("Blog updated successfully!");
+      } else {
+        await axiosSecure.post("/blogs", blogData);
+        toast.success("Blog created as draft!");
+      }
+
       navigate("/dashboard/content-management");
     } catch (error) {
       console.error(error);
-      toast.error("Failed to create blog.");
+      toast.error("Submission failed");
     }
   };
 
   return (
     <div className="max-w-4xl mx-auto p-6">
-      <h2 className="text-2xl font-bold mb-4">Add Blog</h2>
+      <h2 className="text-2xl font-bold mb-4">
+        {isEditMode ? "Edit Blog" : "Add Blog"}
+      </h2>
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
@@ -78,7 +112,6 @@ const AddBlog = () => {
             className="w-full border p-2 rounded"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            required
           />
         </div>
 
@@ -90,7 +123,7 @@ const AddBlog = () => {
             onChange={handleImageUpload}
             className="w-full"
           />
-          {uploading && <p className="text-blue-600">Uploading image...</p>}
+          {uploading && <p className="text-blue-600">Uploading...</p>}
           {thumbnailUrl && (
             <img
               src={thumbnailUrl}
@@ -114,7 +147,7 @@ const AddBlog = () => {
           type="submit"
           className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
         >
-          Create Blog
+          {isEditMode ? "Update Blog" : "Create Blog"}
         </button>
       </form>
     </div>

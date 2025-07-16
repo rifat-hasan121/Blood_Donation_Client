@@ -2,6 +2,10 @@ import React from "react";
 import { FaHandHoldingHeart, FaHospitalAlt } from "react-icons/fa";
 
 const HeroDonateCard = () => {
+  
+  const handleDonate = async () => {
+   console.log('clicked donate')
+  };
   return (
     <div className="max-w-3xl mx-auto my-10 px-6">
       <div className="bg-red-300 rounded-2xl p-8 text-center shadow-lg">
@@ -15,7 +19,10 @@ const HeroDonateCard = () => {
 
         {/* Buttons */}
         <div className="mt-6 flex flex-col sm:flex-row gap-4 justify-center">
-          <button className="flex items-center justify-center gap-2 px-5 py-3 bg-white text-red-600 font-semibold rounded-full border border-red-500 hover:bg-red-50 hover:scale-105 transition-all duration-300 shadow-sm">
+          <button
+           
+            className="flex items-center justify-center gap-2 px-5 py-3 bg-white text-red-600 font-semibold rounded-full border border-red-500 hover:bg-red-50 hover:scale-105 transition-all duration-300 shadow-sm"
+          >
             <FaHandHoldingHeart className="text-lg" />
             Donate Now
           </button>

@@ -238,6 +238,9 @@ const DashBoardLayout = () => {
                 >
                   All Blood Donation Requests
                 </NavLink>
+                <NavLink to="/dashboard/add-blog" className={navLinkClass}>
+                  Publish Blog
+                </NavLink>
                 <NavLink
                   to="/dashboard/content-management"
                   className={navLinkClass}

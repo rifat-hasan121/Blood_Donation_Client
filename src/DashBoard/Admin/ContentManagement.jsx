@@ -1,17 +1,19 @@
-// src/pages/Dashboard/ContentManagement.jsx
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router";
+import { Link } from "react-router"; 
 import toast from "react-hot-toast";
-import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import LoadingSpinner from "../../Shared/LoadingSpinner";
+import useAuth from "../../Api/useAuth";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 const ContentManagement = () => {
+  const { user } = useAuth(); // রোল পাওয়া যাচ্ছে এখান থেকে
   const [blogs, setBlogs] = useState([]);
   const [filteredBlogs, setFilteredBlogs] = useState([]);
   const [statusFilter, setStatusFilter] = useState("all");
   const [loading, setLoading] = useState(true);
 
   const axiosSecure = useAxiosSecure();
+  
 
   useEffect(() => {
     const fetchBlogs = async () => {
@@ -72,7 +74,7 @@ const ContentManagement = () => {
       <div className="flex justify-between mb-6">
         <h2 className="text-2xl font-bold">Content Management</h2>
         <Link
-          to="/dashboard/content-management/add-blog"
+          to="/dashboard/add-blog"
           className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
         >
           Add Blog
@@ -122,16 +124,27 @@ const ContentManagement = () => {
                 </span>
               </p>
               <div className="flex gap-2 mt-2">
-                <button
-                  onClick={() => togglePublish(blog)}
-                  className={`px-3 py-1 rounded text-white ${
-                    blog.status === "draft"
-                      ? "bg-green-600 hover:bg-green-700"
-                      : "bg-yellow-600 hover:bg-yellow-700"
-                  }`}
+                <Link
+                  to={`/dashboard/edit-blog/${blog._id}`}
+                  className="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white rounded"
                 >
-                  {blog.status === "draft" ? "Publish" : "Unpublish"}
-                </button>
+                  Edit
+                </Link>
+
+                {/* শুধু admin ইউজারের জন্য পাবলিশ বাটন দেখাবে */}
+                {user?.role === "admin" && (
+                  <button
+                    onClick={() => togglePublish(blog)}
+                    className={`px-3 py-1 rounded text-white ${
+                      blog.status === "draft"
+                        ? "bg-green-600 hover:bg-green-700"
+                        : "bg-yellow-600 hover:bg-yellow-700"
+                    }`}
+                  >
+                    {blog.status === "draft" ? "Publish" : "Unpublish"}
+                  </button>
+                )}
+
                 <button
                   onClick={() => handleDelete(blog._id)}
                   className="px-3 py-1 bg-red-600 hover:bg-red-700 text-white rounded"
