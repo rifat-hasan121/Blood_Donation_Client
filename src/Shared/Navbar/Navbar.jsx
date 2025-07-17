@@ -1,8 +1,11 @@
 import React, { use, useState } from "react";
 import { Link, NavLink } from "react-router";
-import { MdErrorOutline } from "react-icons/md";
+import { MdErrorOutline, MdOutlineDashboardCustomize } from "react-icons/md";
 import { AiOutlineMenu } from "react-icons/ai";
 import { FaUserCircle } from "react-icons/fa";
+import { CgProfile } from "react-icons/cg";
+import { BiCommand, BiSolidDonateBlood } from "react-icons/bi";
+import { TbLogin } from "react-icons/tb";
 import { AiOutlineContacts, AiOutlineLogout } from "react-icons/ai";
 import toast from "react-hot-toast";
 import ThemeProvider from "../../Provider/ThemeProvider";
@@ -68,30 +71,6 @@ const Navbar = () => {
     <div className="bg-white text-black dark:bg-gray-700 dark:text-white fixed top-0 right-0 left-0 z-50">
       <div className="navbar w-full sm:w-11/12 mx-auto">
         <div className="navbar-start">
-          <div className="dropdown">
-            <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 6h16M4 12h8m-8 6h16"
-                />
-              </svg>
-            </div>
-            <ul
-              tabIndex={0}
-              className="menu menu-sm dropdown-content rounded-box z-1 mt-3 w-52 p-2 shadow text-xl bg-base-200 text-black dark:text-white"
-            >
-              {links}
-            </ul>
-          </div>
           <Link to="/">
             <div className="flex items-center gap-2">
               <img
@@ -120,7 +99,7 @@ const Navbar = () => {
               onClick={() => setIsOpen(!isOpen)}
               className="p-3 md:p-2 flex items-center gap-3 rounded-full cursor-pointer hover:shadow-md transition"
             >
-              <AiOutlineMenu className="lg:hidden block" size={24} />
+              <AiOutlineMenu className="md:hidden block" size={24} />
               <div className="hidden md:block">
                 {user?.photoURL ? (
                   <img
@@ -156,23 +135,66 @@ const Navbar = () => {
 
                   {user ? (
                     <>
+                      {window.innerWidth < 640 && (
+                        <NavLink
+                          className="flex gap-2 px-4 py-3 hover:bg-neutral-100 transition font-semibold border-b border-gray-200"
+                          to="/"
+                        >
+                          <span>
+                            <IoHomeOutline />
+                          </span>
+                          <span>Home</span>
+                        </NavLink>
+                      )}
+
+                      {window.innerWidth < 640 && (
+                        <NavLink
+                          className="flex gap-2 px-4 py-3 hover:bg-neutral-100 transition font-semibold border-b border-gray-200"
+                          to="/about"
+                        >
+                          <span>
+                            <MdErrorOutline />
+                          </span>
+                          <span>About</span>
+                        </NavLink>
+                      )}
+                      {window.innerWidth < 640 && (
+                        <NavLink
+                          className="flex gap-2 px-4 py-3 hover:bg-neutral-100 transition font-semibold border-b border-gray-200"
+                          to="/contact"
+                        >
+                          <span>
+                            <AiOutlineContacts />
+                          </span>
+                          <span>Contact</span>
+                        </NavLink>
+                      )}
                       <NavLink
                         to="/dashboard/profile"
-                        className="px-4 py-3 hover:bg-neutral-100 transition font-semibold border-b border-gray-200"
+                        className="flex gap-2 items-center px-4 py-3 hover:bg-neutral-100 transition font-semibold border-b border-gray-200"
                       >
-                        Profile
+                        <span>
+                          <CgProfile />
+                        </span>
+                        <span>Profile</span>
                       </NavLink>
                       <NavLink
                         to="/dashboard"
-                        className="px-4 py-3 hover:bg-neutral-100 transition font-semibold border-b border-gray-200"
+                        className="flex gap-2 items-center px-4 py-3 hover:bg-neutral-100 transition font-semibold border-b border-gray-200"
                       >
-                        Dashboard
+                        <span>
+                          <MdOutlineDashboardCustomize />
+                        </span>
+                        <span> Dashboard</span>
                       </NavLink>
                       <NavLink
                         to="/signup"
-                        className="px-4 py-3 hover:bg-neutral-100 transition font-semibold border-b border-gray-200"
+                        className="flex gap-2 items-center px-4 py-3 hover:bg-neutral-100 transition font-semibold border-b border-gray-200"
                       >
-                        Donate
+                        <span>
+                          <BiSolidDonateBlood />
+                        </span>
+                        <span> Donate</span>
                       </NavLink>
                       <div className="px-4 py-3 flex text-red-500 items-center gap-2 hover:bg-neutral-100 transition font-semibold cursor-pointer border-b border-gray-200">
                         <button className="flex gap-2" onClick={handleLogout}>
@@ -185,17 +207,57 @@ const Navbar = () => {
                     </>
                   ) : (
                     <>
+                      {window.innerWidth < 640 && (
+                        <NavLink
+                          className="flex gap-2 px-4 py-3 hover:bg-neutral-100 transition font-semibold border-b border-gray-200"
+                          to="/"
+                        >
+                          <span>
+                            <IoHomeOutline />
+                          </span>
+                          <span>Home</span>
+                        </NavLink>
+                      )}
+
+                      {window.innerWidth < 640 && (
+                        <NavLink
+                          className="flex gap-2 px-4 py-3 hover:bg-neutral-100 transition font-semibold border-b border-gray-200"
+                          to="/about"
+                        >
+                          <span>
+                            <MdErrorOutline />
+                          </span>
+                          <span>About</span>
+                        </NavLink>
+                      )}
+                      {window.innerWidth < 640 && (
+                        <NavLink
+                          className="flex gap-2 px-4 py-3 hover:bg-neutral-100 transition font-semibold border-b border-gray-200"
+                          to="/contact"
+                        >
+                          <span>
+                            <AiOutlineContacts />
+                          </span>
+                          <span>Contact</span>
+                        </NavLink>
+                      )}
                       <NavLink
                         to="/login"
-                        className="px-4 py-3 hover:bg-neutral-100 transition font-semibold border-b border-gray-200"
+                        className="flex gap-2 items-center px-4 py-3 hover:bg-neutral-100 transition font-semibold border-b border-gray-200"
                       >
-                        Login
+                        <span>
+                          <TbLogin />
+                        </span>
+                        <span>Login</span>
                       </NavLink>
                       <NavLink
                         to="/signup"
-                        className="px-4 py-3 hover:bg-neutral-100 transition font-semibold"
+                        className=" flex gap-2 items-center px-4 py-3 hover:bg-neutral-100 transition font-semibold"
                       >
-                        Sign Up
+                        <span>
+                          <BiCommand />
+                        </span>
+                        <span> Sign Up</span>
                       </NavLink>
                     </>
                   )}

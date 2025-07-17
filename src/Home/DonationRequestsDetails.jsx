@@ -17,7 +17,7 @@ const DonationRequestsDetails = () => {
         const response = await axios.get(
           `${import.meta.env.VITE_API_URI}/donation-requests/${id}`
         );
-        console.log(import.meta.env.VITE_API_URL);
+ 
 
         setDonationRequest(response.data);
       } catch (error) {

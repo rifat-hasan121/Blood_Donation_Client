@@ -6,10 +6,11 @@ import { MdEmail, MdPhone, MdLocationPin, MdBloodtype } from "react-icons/md";
 import { AuthContext } from "../Provider/AuthProvider";
 import toast from "react-hot-toast";
 import LoadingSpinner from "../Shared/LoadingSpinner";
+import { axiosSecure } from "../Hooks/useAxiosSecure";
 
 const UserProfile = () => {
   const { user, updateUser, loading } = useContext(AuthContext);
-  console.log(user)
+
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
@@ -28,8 +29,8 @@ const UserProfile = () => {
   const fetchUserProfile = async (email) => {
     setIsFetching(true);
     try {
-      const res = await fetch(`http://localhost:3000/profile/${email}`);
-      const data = await res.json();
+      const res = await axiosSecure.get(`/profile/${email}`);
+      const data = res.data;
 
       // Save user to global context
       updateUser(data);
@@ -50,6 +51,7 @@ const UserProfile = () => {
       setIsFetching(false);
     }
   };
+
 
   // ✅ Fetch profile on mount
   useEffect(() => {

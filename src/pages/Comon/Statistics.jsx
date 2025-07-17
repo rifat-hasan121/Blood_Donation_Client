@@ -12,8 +12,7 @@ const Statistics = () => {
   if (isLoading) return <LoadingSpinner />;
   if (!role) return <p>Unable to determine role. Please try again later.</p>;
 
-  console.log("isLoading:", isLoading);
-  console.log("Role:", role);
+ 
 
   // Ensure you're accessing the 'role' property of the object
   const userRole = role?.role;

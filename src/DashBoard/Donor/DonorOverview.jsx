@@ -9,6 +9,7 @@ import {
   FaCheckCircle,
   FaSpinner,
 } from "react-icons/fa";
+import { axiosSecure } from "../../Hooks/useAxiosSecure";
 
 const DonorOverview = () => {
   const { user, loading } = useContext(AuthContext);
@@ -17,14 +18,15 @@ const DonorOverview = () => {
 
   useEffect(() => {
     if (user?.email) {
-      fetch(`http://localhost:3000/donation-requests/email/${user.email}`)
-        .then((res) => res.json())
-        .then((data) => {
-          setRequests(data);
+      axiosSecure
+        .get(`/donation-requests/email/${user.email}`)
+        .then((res) => {
+          setRequests(res.data);
         })
         .catch((err) => console.error(err));
     }
   }, [user?.email]);
+
 
   if (loading) return <LoadingSpinner />;
 

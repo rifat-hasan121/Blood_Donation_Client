@@ -1,131 +1,3 @@
-// import React from "react";
-// import logo from "../assets/images/logo.png";
-// import { Link, NavLink, Outlet } from "react-router";
-// import DashNav from "../DashBoard/Sidebar/Menu/DashNav";
-
-// const DashBoardLayout = () => {
-//   // LocalStorage থেকে ইউজার role পড়া হচ্ছে
-//   const userData = JSON.parse(localStorage.getItem("user"));
-//   const userRole = userData?.role;
-
-//   return (
-//     <div className="flex min-h-screen">
-//       <>
-//         {/* Sidebar */}
-//         <aside className="w-64 bg-blue-100 dark:bg-gray-700 dark:text-gray-200 text-gray-900 shadow-md transition-all duration-300">
-//           <div>
-//             <Link to="/">
-//               <div className="flex flex-col justify-center items-center bg-red-300 rounded-2xl my-12 mx-6 p-2">
-//                 <img
-//                   src={logo}
-//                   alt="blood logo"
-//                   className="max-w-20 max-h-20"
-//                 />
-//               </div>
-//             </Link>
-
-//             <div className="grid grid-cols-1 justify-center items-center gap-4 mt-6 my-12 px-4 text-lg font-bold">
-//               {/* সবার জন্য Overview */}
-//               <NavLink
-//                 className="transition duration-300 hover:bg-blue-200 py-4 px-3 rounded-sm"
-//                 to="/dashboard"
-//                 end
-//               >
-//                 Overview
-//               </NavLink>
-
-//               {/* Admin Routes */}
-//               {userRole === "admin" && (
-//                 <>
-//                   <NavLink
-//                     className="transition duration-300 hover:bg-blue-200 py-4 px-3 rounded-sm"
-//                     to="manage-users"
-//                     end
-//                   >
-//                     Manage Users
-//                   </NavLink>
-//                   <NavLink
-//                     className="transition duration-300 hover:bg-blue-200 py-4 px-3 rounded-sm"
-//                     to="all-blood-donation-request"
-//                     end
-//                   >
-//                     All Request Donations
-//                   </NavLink>
-//                   <NavLink
-//                     className="transition duration-300 hover:bg-blue-200 py-4 px-3 rounded-sm"
-//                     to="content-management"
-//                     end
-//                   >
-//                     Content Management
-//                   </NavLink>
-//                 </>
-//               )}
-
-//               {/* Donor Routes */}
-//               {userRole === "donor" && (
-//                 <>
-//                   <NavLink
-//                     className="transition duration-300 hover:bg-blue-200 py-4 px-3 rounded-sm"
-//                     to="My-donation-request"
-//                   >
-//                     My Donation Requests
-//                   </NavLink>
-//                   <NavLink
-//                     className="transition duration-300 hover:bg-blue-200 py-4 px-3 rounded-sm"
-//                     to="add-request"
-//                   >
-//                     Create Donation Request
-//                   </NavLink>
-//                 </>
-//               )}
-
-//               {/* Volunteer Routes */}
-//               {userRole === "volunteer" && (
-//                 <>
-//                   <NavLink
-//                     className="transition duration-300 hover:bg-blue-200 py-4 px-3 rounded-sm"
-//                     to="all-blood-donation-request"
-//                     end
-//                   >
-//                     All Request Donations
-//                   </NavLink>
-//                   <NavLink
-//                     className="transition duration-300 hover:bg-blue-200 py-4 px-3 rounded-sm"
-//                     to="content-management"
-//                     end
-//                   >
-//                     Content Management
-//                   </NavLink>
-//                 </>
-//               )}
-//             </div>
-//           </div>
-
-//           <div className="px-4">
-//             <NavLink
-//               to="profile"
-//               className="transition duration-300 hover:bg-blue-200 py-4 px-3 rounded-sm"
-//             >
-//               Profile
-//             </NavLink>
-//           </div>
-//         </aside>
-//         <hr />
-//       </>
-
-//       {/* Main Content */}
-//       <main className="flex-1 p-6 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-gray-200 transition-all duration-300">
-//         <DashNav />
-//         <Outlet />
-//       </main>
-//     </div>
-//   );
-// };
-
-// export default DashBoardLayout;
-
-
-
 
 import React, { useEffect, useState } from "react";
 import logo from "../assets/images/logo.png";
@@ -137,7 +9,6 @@ import LoadingSpinner from "../Shared/LoadingSpinner";
 
 const DashBoardLayout = () => {
   const { user } = useAuth();
-  console.log(user)
   const [userRole, setUserRole] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -195,6 +66,12 @@ const DashBoardLayout = () => {
                   className={navLinkClass}
                 >
                   All Blood Donation Requests
+                </NavLink>
+                <NavLink
+                  to="/dashboard/funds-details"
+                  className={navLinkClass}
+                >
+                  Funds
                 </NavLink>
                 <NavLink
                   to="/dashboard/content-management"
@@ -274,3 +151,4 @@ const navLinkClass = ({ isActive }) =>
     : "transition duration-300 hover:bg-blue-200 py-4 px-3 rounded-sm";
 
 export default DashBoardLayout;
+

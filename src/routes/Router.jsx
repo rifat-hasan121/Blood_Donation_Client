@@ -1,95 +1,3 @@
-// import { createBrowserRouter } from "react-router";
-// import MainLayout from "../layouts/MainLayout";
-// import Home from "../Home/Home";
-// import Login from "../pages/ErrorPage/Login";
-// import Contact from "../Home/Contact";
-// import About from "../Home/About";
-// import DashBoardLayout from "../layouts/DashBoardLayout";
-// import Profile from "../DashBoard/Profile";
-// import AddBloodForm from "../Form/AddBloodForm";
-// import MyDonationRequests from "../DashBoard/Donor/MyDonationRequests";
-// import Registration from "../pages/Registration";
-// import DonationRequestsDetails from "../Home/DonationRequestsDetails";
-// import ManageUsers from "../DashBoard/Admin/ManageUsers";
-// import AdminDashboard from "../DashBoard/Admin/AdminDashboard";
-// import AllDonationRequests from "../DashBoard/Admin/AllDonationRequests";
-// import ContentManagement from "../DashBoard/Admin/ContentManagement";
-// import AddBlog from "../Home/AddBlog";
-
-// export const router = createBrowserRouter([
-//   {
-//     path: "/",
-//     element: <MainLayout />,
-//     children: [
-//       {
-//         index: true,
-//         element: <Home />,
-//       },
-//       {
-//         path: "about",
-//         element: <About />,
-//       },
-//       {
-//         path: "contact",
-//         element: <Contact />,
-//       },
-//       {
-//         path: "donation-request-details/:id",
-//         element: <DonationRequestsDetails />,
-//       },
-//     ],
-//   },
-//   {
-//     path: "/login",
-//     element: <Login />,
-//   },
-//   {
-//     path: "/signUp",
-//     element: <Registration />,
-//   },
-//   {
-//     path: "/dashboard",
-//     element: <DashBoardLayout />,
-//     children: [
-//       {
-//         index: true,
-//         element: <AdminDashboard />,
-//       },
-//       {
-//         path: "all-blood-donation-request",
-//         element: <AllDonationRequests />,
-//       },
-//       {
-//         path: "content-management",
-//         element: <ContentManagement />,
-//       },
-//       {
-//         path: "content-management/add-blog",
-//         element: <AddBlog />,
-//       },
-//       {
-//         path: "profile",
-//         element: <Profile />,
-//       },
-//       {
-//         path: "add-request",
-//         element: <AddBloodForm />,
-//       },
-//       {
-//         path: "my-donation-request",
-//         element: <MyDonationRequests />,
-//       },
-//       {
-//         path: "manage-users",
-//         element: <ManageUsers />,
-//       },
-//     ],
-//   },
-// ]);
-
-
-
-// src/routes/router.jsx
 import { createBrowserRouter, Navigate, Outlet } from "react-router";
 import MainLayout from "../layouts/MainLayout";
 import Home from "../Home/Home";
@@ -111,7 +19,8 @@ import { use } from "react";
 import { AuthContext } from "../Provider/AuthProvider";
 import DonorOverview from "../DashBoard/Donor/DonorOverview";
 import PrivateRoute from "./PrivateRoute";
-import AllDonations from "../pages/ AllDonations";
+import Payment from "../pages/pyments/Payment";
+import FundsTable from "../DashBoard/Admin/FundsTable";
 
 // Role Based Route Component
 const RoleBasedRoute = ({ allowedRoles }) => {
@@ -136,8 +45,8 @@ export const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "/all-donations",
-        element: <AllDonations />
+        path: "payment",
+        Component: Payment,
       },
       {
         path: "about",
@@ -244,6 +153,14 @@ export const router = createBrowserRouter([
               </PrivateRoute>
             ),
           },
+          {
+            path: "funds-details",
+            element: (
+              <PrivateRoute>
+               <FundsTable/>
+              </PrivateRoute>
+            ),
+          },
 
           {
             path: "add-blog",
@@ -254,8 +171,9 @@ export const router = createBrowserRouter([
             ),
           },
           {
-            path:"/dashboard/edit-blog/:id", element:<AddBlog />
-          }
+            path: "/dashboard/edit-blog/:id",
+            element: <AddBlog />,
+          },
         ],
       },
 

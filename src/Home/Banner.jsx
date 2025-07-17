@@ -24,7 +24,7 @@ const Banner = () => {
             </p>
             {/* marquee */}
 
-            <div className="max-w-3xl mx-auto py-6 rounded-sm bg-sky-100">
+            <div className="max-w-sm md:max-w-2xl lg:max-w-3xl mx-auto py-6 rounded-sm bg-sky-100">
               <Marquee>
                 <div className=" flex gap-12">
                   <LiveSaves />

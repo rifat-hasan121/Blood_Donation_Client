@@ -60,7 +60,7 @@ const Login = () => {
         setError("User not found in database.");
       }
     } catch (error) {
-      console.log(error);
+      toast(error)
       setError(error.message);
     }
   };
@@ -122,7 +122,7 @@ const Login = () => {
         draggable: true,
       });
     } catch (error) {
-      console.log(error);
+      toast(error);
       setError(error.message);
     }
   };

@@ -1,22 +1,40 @@
 import React, { useEffect, useState } from "react";
+import useAuth from "../../Api/useAuth"
 import { FaUsers, FaHandHoldingUsd, FaTint } from "react-icons/fa";
 import axios from "axios";
 
 const AdminDashboard = () => {
+  const { user } = useAuth();
+  
   const [stats, setStats] = useState({
     totalDonors: 0,
     totalBloodRequests: 0,
-    totalFunding: 0,
   });
 
+  const [totalFunding, setTotalFunding] = useState(0);
+
+  // Fetch total donors & blood requests
   useEffect(() => {
     axios
-      .get("http://localhost:3000/admin-stats")
+      .get("http://localhost:3000/admin-stats", { withCredentials: true })
       .then((res) => {
         setStats(res.data);
       })
       .catch((err) => {
         console.error("Error fetching admin stats:", err);
+      });
+  }, []);
+
+
+  // Fetch total funding separately
+  useEffect(() => {
+    axios
+      .get("http://localhost:3000/funds/total")
+      .then((res) => {
+        setTotalFunding(res.data.totalAmount || 0);
+      })
+      .catch((err) => {
+        console.error("Error fetching total funding:", err);
       });
   }, []);
 
@@ -31,7 +49,7 @@ const AdminDashboard = () => {
     {
       id: 2,
       title: "Total Funding",
-      count: stats.totalFunding || "$0", // Placeholder if not implemented
+      count: `৳${totalFunding.toLocaleString()}`, // টাকা সহ format করে দেখানো হচ্ছে
       icon: <FaHandHoldingUsd className="text-4xl text-primary" />,
       color: "bg-gradient-to-r from-green-400 to-green-600",
     },
@@ -47,11 +65,13 @@ const AdminDashboard = () => {
   return (
     <div className="px-4 py-8 max-w-7xl mx-auto">
       {/* Welcome Section */}
-      <div className="text-center mb-10">
-        <h1 className="text-3xl font-bold text-primary">
-          Welcome to Admin Dashboard
-        </h1>
-        <p className="text-gray-600 mt-2">
+      <div className="mb-10 py-12 px-6 rounded-xl bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-600 text-white">
+        <h1 className="text-3xl font-bold">Welcome {user?.name||user?.displayName} !</h1>
+        <h3 className="text-2xl mt-2">
+          Your leadership and generosity save lives. Thank you for being a true
+          hero!
+        </h3>
+        <p className=" mt-2">
           Manage donors, funding, and blood donation requests efficiently.
         </p>
       </div>

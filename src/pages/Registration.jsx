@@ -291,7 +291,6 @@ const Registration = () => {
       toast.success("Signup Successful");
       navigate("/dashboard/profile");
     } catch (err) {
-      console.log(err);
       toast.error(err?.message);
     }
   };

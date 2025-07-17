@@ -51,9 +51,18 @@ const AuthProvider = ({ children }) => {
     });
   };
 
-  const logout = () => {
-    return signOut(auth);
-  };
+const logout = async () => {
+  try {
+    await axios.get(`${import.meta.env.VITE_API_URI}/logout`, {
+      withCredentials: true,
+    });
+    await signOut(auth);
+    setUser(null);
+  } catch (error) {
+    console.error("Logout failed:", error);
+  }
+};
+
 
   const updateUser = (newData) => {
     setUser((prev) => ({
@@ -61,39 +70,9 @@ const AuthProvider = ({ children }) => {
       ...newData,
     }));
   };
-
-  // useEffect(() => {
-  //   const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
-  //     console.log("current user", currentUser?.email);
-  //     setUser(currentUser);
-  //     // if (currentUser.email) {
-        
-
-  //     //   // get jwt token
-  //     //   await axios.post(
-  //     //     `${import.meta.env.VITE_API_URI}/jwt`,
-  //     //     {
-  //     //       email: currentUser?.email,
-  //     //     },
-  //     //     { withCredentials: true }
-  //     //   );
-  //     // } else {
-  //     //   setUser(currentUser);
-  //     //   await axios.get(`${import.meta.env.VITE_API_URI}/logout`, {
-  //     //     withCredentials: true,
-  //     //   });
-  //     // }
-
-  //     setLoading(false);
-  //   });
-  //   return () => {
-  //     unsubscribe();
-  //   };
-  // }, []);
-
     useEffect(() => {
       const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
-        console.log("current user", currentUser?.email);
+        
 
         if (currentUser?.email) {
           try {
@@ -109,7 +88,7 @@ const AuthProvider = ({ children }) => {
               `${import.meta.env.VITE_API_URI}/users/role/${currentUser.email}`
             );
 
-            console.log("User role fetched:", res.data);
+    
 
             setUser({
               email: currentUser.email,
@@ -136,6 +115,8 @@ const AuthProvider = ({ children }) => {
         unsubscribe();
       };
     }, []);
+  
+  
   const authData = {
     user,
     setUser,

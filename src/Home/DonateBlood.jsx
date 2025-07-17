@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router';
 
 const DonateBlood = () => {
     return (
@@ -23,9 +24,11 @@ const DonateBlood = () => {
             <button className="px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg bg-red-600 hover:bg-red-700 text-white shadow-red-600/30">
               Learn More{" "}
             </button>
-            <button className="px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-300 transform hover:scale-105 border-2 border-red-600 text-red-600 hover:bg-red-600 hover:text-white">
-              Donate Now
-            </button>
+            <Link to="/payment">
+              <button className="px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-300 transform hover:scale-105 border-2 border-red-600 text-red-600 hover:bg-red-600 hover:text-white">
+                Donate Now
+              </button>
+            </Link>
           </div>
           <div className="mt-8 p-6 rounded-xl bg-white/50 backdrop-blur-sm">
             <div className="grid grid-cols-3 gap-4 text-center">

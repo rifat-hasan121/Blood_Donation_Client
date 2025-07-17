@@ -40,9 +40,12 @@ const WhyDonate = () => {
   ];
 
   return (
-    <section className="py-24 px-6 bg-red-50">
+    <section className=" py-24 px-6 bg-red-50">
       {/* Header */}
-      <div className="max-w-4xl mx-auto flex flex-col justify-center items-center text-center" data-aos="fade-up">
+      <div
+        className="max-w-4xl mx-auto flex flex-col justify-center items-center text-center"
+        data-aos="fade-up"
+      >
         <h2 className="text-4xl font-bold text-red-700 border-b-4 border-red-500 inline-block pb-2">
           About Blood Donation
         </h2>
@@ -52,10 +55,12 @@ const WhyDonate = () => {
           injuries, surgeries, anemia, cancer, and other medical conditions.
         </p>
 
-        <button className="flex items-center justify-center gap-2 px-6 py-3 bg-red-500 hover:bg-red-600 text-white rounded-full font-semibold shadow-md hover:shadow-lg transform hover:-translate-y-1 hover:scale-105 transition-all duration-300 border-none my-6">
-          <FaHandHoldingHeart className="text-xl animate-pulse" />
-          Donate Now
-        </button>
+        <Link to="/payment">
+          <button className="flex items-center justify-center gap-2 px-6 py-3 bg-red-500 hover:bg-red-600 text-white rounded-full font-semibold shadow-md hover:shadow-lg transform hover:-translate-y-1 hover:scale-105 transition-all duration-300 border-none my-6">
+            <FaHandHoldingHeart className="text-xl animate-pulse" />
+            Donate Now
+          </button>
+        </Link>
       </div>
 
       {/* Benefits */}
@@ -90,7 +95,7 @@ const WhyDonate = () => {
 
       {/* CTA */}
       <div className="mt-16 text-center" data-aos="fade-up">
-              <HeroDonateCard/>
+        <HeroDonateCard />
       </div>
     </section>
   );

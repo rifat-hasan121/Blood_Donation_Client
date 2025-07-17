@@ -229,7 +229,7 @@ const BloodDonateRequests = () => {
     : filteredRequests.slice(0, 8);
 
   return (
-    <div className="max-w-6xl mx-auto py-8">
+    <div className="max-w-6xl px-4 mx-auto py-8">
       <form
         onSubmit={handleSearch}
         className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8"
@@ -348,7 +348,7 @@ const BloodDonateRequests = () => {
         ))}
       </div>
 
-      {!showAll && filteredRequests.length > 8 && (
+      {!showAll && filteredRequests.length > 6 && (
         <div className="text-center mt-6">
           <button
             className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition"

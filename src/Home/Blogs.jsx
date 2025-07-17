@@ -44,7 +44,7 @@ const Blogs = () => {
   return (
     <div className="max-w-7xl mx-auto py-24">
       <div className="flex flex-col justify-center items-center text-center">
-        <h3 className="text-xl my-6 md:text-5xl font-bold text-red-500">
+        <h3 className="text-4xl my-6 md:text-5xl font-bold text-red-500">
           Blood Donation Blogs
         </h3>
         <p className="text-gray-400 text-lg">
