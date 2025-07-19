@@ -3,6 +3,8 @@ import { useParams, useNavigate } from "react-router";
 import axios from "axios";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2"; 
+import useAuth from "../Api/useAuth";
+import useAxiosSecure from "../Hooks/useAxiosSecure";
 
 const DonationRequestsDetails = () => {
   const { id } = useParams();
@@ -10,24 +12,27 @@ const DonationRequestsDetails = () => {
   const [donationRequest, setDonationRequest] = useState(null);
   const [loading, setLoading] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
+  const { user } = useAuth();
+  const axiosSecure = useAxiosSecure();
 
-  useEffect(() => {
-    const fetchDonationRequestDetails = async () => {
-      try {
-        const response = await axios.get(
-          `${import.meta.env.VITE_API_URI}/donation-requests/${id}`
-        );
- 
+  
+useEffect(() => {
+  const fetchDonationRequestDetails = async () => {
+    try {
+      const response = await axiosSecure.get(`/donation-requests/${id}`);
+      setDonationRequest(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.error("Error fetching donation request:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-        setDonationRequest(response.data);
-      } catch (error) {
-        console.error("Error fetching donation request:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  if (user?.email) {
     fetchDonationRequestDetails();
-  }, [id]);
+  }
+}, [id, axiosSecure, user?.email]); 
 
   const handleDonate = async () => {
     try {
@@ -38,7 +43,7 @@ const DonationRequestsDetails = () => {
       };
 
       // Make the PUT request to update the status
-      await axios.put(
+      await axiosSecure.put(
         `${import.meta.env.VITE_API_URI}/donation-requests/${id}`,
         { status: "InProgress" }
       );
@@ -97,7 +102,7 @@ const DonationRequestsDetails = () => {
                   Requester Information
                 </h2>
                 <p className="text-gray-600  mt-2">
-                  <strong>Name:</strong> {donationRequest.requesterName}
+                  <strong>Name:</strong> {user?.name || user?.displayName}
                 </p>
                 <p className="text-gray-600">
                   <strong>Email:</strong> {donationRequest.requesterEmail}
@@ -182,7 +187,7 @@ const DonationRequestsDetails = () => {
                 <label className="block text-gray-700">Donor Name</label>
                 <input
                   type="text"
-                  value={donationRequest?.requesterName || ""}
+                  value={user?.name || user?.displayName || ""}
                   readOnly
                   className="w-full px-4 py-2 border rounded-md bg-gray-100"
                 />

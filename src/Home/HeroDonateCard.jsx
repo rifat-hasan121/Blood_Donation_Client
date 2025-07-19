@@ -7,7 +7,7 @@ const HeroDonateCard = () => {
  
   return (
     <div className="max-w-3xl mx-auto my-10 md:px-6">
-      <div className="bg-red-300 rounded-2xl p-8 text-center shadow-lg">
+      <div className="bg-red-300 dark:bg-red-900 rounded-2xl p-8 text-center shadow-lg">
         {/* Heading */}
         <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white">
           Be Someone's Hero Today

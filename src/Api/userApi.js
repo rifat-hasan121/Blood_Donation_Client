@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const updateUserProfile = async (email, profileData) => {
     const res = await axios.put(
-        `http://localhost:3000/profile/${email}`,
+        `https://assaingment-12-server-iota.vercel.app/profile/${email}`,
         profileData
     );
 

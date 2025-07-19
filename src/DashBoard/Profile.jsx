@@ -11,7 +11,6 @@ import { axiosSecure } from "../Hooks/useAxiosSecure";
 const UserProfile = () => {
   const { user, updateUser, loading } = useContext(AuthContext);
 
-
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
 
@@ -52,7 +51,6 @@ const UserProfile = () => {
     }
   };
 
-
   // ✅ Fetch profile on mount
   useEffect(() => {
     if (user?.email) {
@@ -67,13 +65,16 @@ const UserProfile = () => {
   // ✅ Save updated profile to backend
   const onSubmit = async (data) => {
     try {
-      const res = await fetch(`http://localhost:3000/profile/${data.email}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
+      const res = await fetch(
+        `https://assaingment-12-server-iota.vercel.app/profile/${data.email}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        }
+      );
 
       const result = await res.json();
 
@@ -116,7 +117,7 @@ const UserProfile = () => {
           {user?.name || user?.displayName || "Unknown User"}
         </h2>
         <div className="mt-2 flex justify-center gap-3">
-          <span className="badge badge-error">{user?.role|| "N/A"}</span>
+          <span className="badge badge-error">{user?.role || "N/A"}</span>
           <span className="badge badge-success">{user?.status || "N/A"}</span>
         </div>
       </div>

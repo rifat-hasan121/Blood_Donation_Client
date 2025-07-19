@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { format } from "date-fns";
-import { axiosSecure } from "../../Hooks/useAxiosSecure";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 const FundsTable = () => {
   const [funds, setFunds] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(false);
+  const axiosSecure=useAxiosSecure()
 
  const fetchFunds = async (page = 1) => {
    setLoading(true);

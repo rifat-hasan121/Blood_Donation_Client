@@ -6,14 +6,9 @@ import { AuthContext } from "../../Provider/AuthProvider";
 
 const Login = () => {
   const [error, setError] = useState("");
-  const {
-    loginUser,
-    createUserWithLoginGoogle,
-    setUser,
-    resetPassword,
-  } = useContext(AuthContext);
+  const { loginUser, createUserWithLoginGoogle, setUser, resetPassword } =
+    useContext(AuthContext);
 
-  
   const navigate = useNavigate();
   const emailRef = useRef();
 
@@ -36,7 +31,9 @@ const Login = () => {
       const loggedUser = result.user;
 
       // fetch user data from backend
-      const res = await fetch(`http://localhost:3000/users/${loggedUser.email}`);
+      const res = await fetch(
+        `https://assaingment-12-server-iota.vercel.app/users/${loggedUser.email}`
+      );
       const dbUser = await res.json();
 
       if (dbUser?.email) {
@@ -60,14 +57,14 @@ const Login = () => {
         setError("User not found in database.");
       }
     } catch (error) {
-      toast(error)
+      toast(error);
       setError(error.message);
     }
   };
 
   const saveUserInDB = async (userData) => {
     try {
-      await fetch("http://localhost:3000/users", {
+      await fetch("https://assaingment-12-server-iota.vercel.app/users", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -84,7 +81,9 @@ const Login = () => {
       const result = await createUserWithLoginGoogle();
       const user = result.user;
 
-      const res = await fetch(`http://localhost:3000/users/${user.email}`);
+      const res = await fetch(
+        `https://assaingment-12-server-iota.vercel.app/users/${user.email}`
+      );
       let dbUser = await res.json();
 
       if (!dbUser?.email) {

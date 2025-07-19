@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import useAuth from "../../Api/useAuth"
+import useAuth from "../../Api/useAuth";
 import { FaUsers, FaHandHoldingUsd, FaTint } from "react-icons/fa";
 import axios from "axios";
+import { Helmet } from "react-helmet-async";
 
 const AdminDashboard = () => {
   const { user } = useAuth();
-  
+
   const [stats, setStats] = useState({
     totalDonors: 0,
     totalBloodRequests: 0,
@@ -16,7 +17,9 @@ const AdminDashboard = () => {
   // Fetch total donors & blood requests
   useEffect(() => {
     axios
-      .get("http://localhost:3000/admin-stats", { withCredentials: true })
+      .get("https://assaingment-12-server-iota.vercel.app/admin-stats", {
+        withCredentials: true,
+      })
       .then((res) => {
         setStats(res.data);
       })
@@ -25,11 +28,10 @@ const AdminDashboard = () => {
       });
   }, []);
 
-
   // Fetch total funding separately
   useEffect(() => {
     axios
-      .get("http://localhost:3000/funds/total")
+      .get("https://assaingment-12-server-iota.vercel.app/funds/total")
       .then((res) => {
         setTotalFunding(res.data.totalAmount || 0);
       })
@@ -63,35 +65,49 @@ const AdminDashboard = () => {
   ];
 
   return (
-    <div className="px-4 py-8 max-w-7xl mx-auto">
-      {/* Welcome Section */}
-      <div className="mb-10 py-12 px-6 rounded-xl bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-600 text-white">
-        <h1 className="text-3xl font-bold">Welcome {user?.name||user?.displayName} !</h1>
-        <h3 className="text-2xl mt-2">
-          Your leadership and generosity save lives. Thank you for being a true
-          hero!
-        </h3>
-        <p className=" mt-2">
-          Manage donors, funding, and blood donation requests efficiently.
-        </p>
-      </div>
+    <>
+      {user?.role === "admin" ? (
+        <Helmet>
+          <title>Admin Dashboard | Blood Donation</title>
+        </Helmet>
+      ) : (
+        <Helmet>
+          <title>Volunteer Dashboard | Blood Donation</title>
+        </Helmet>
+      )}
 
-      {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        {cardData.map((item) => (
-          <div
-            key={item.id}
-            className={`card shadow-xl text-white ${item.color}`}
-          >
-            <div className="card-body flex items-center justify-center text-center space-y-4">
-              <div>{item.icon}</div>
-              <h2 className="text-2xl font-bold">{item.count}</h2>
-              <p className="text-lg">{item.title}</p>
+      <div className="px-4 py-8 max-w-7xl mx-auto">
+        {/* Welcome Section */}
+        <div className="mb-10 py-12 px-6 rounded-xl bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-600 text-white">
+          <h1 className="text-3xl font-bold">
+            Welcome {user?.name || user?.displayName} !
+          </h1>
+          <h3 className="text-2xl mt-2">
+            Your leadership and generosity save lives. Thank you for being a
+            true hero!
+          </h3>
+          <p className=" mt-2">
+            Manage donors, funding, and blood donation requests efficiently.
+          </p>
+        </div>
+
+        {/* Stats Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {cardData.map((item) => (
+            <div
+              key={item.id}
+              className={`card shadow-xl text-white ${item.color}`}
+            >
+              <div className="card-body flex items-center justify-center text-center space-y-4">
+                <div>{item.icon}</div>
+                <h2 className="text-2xl font-bold">{item.count}</h2>
+                <p className="text-lg">{item.title}</p>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

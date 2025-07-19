@@ -12,7 +12,7 @@ const Banner = () => {
     <div className="">
       <section className="">
         <div className="relative bg-[url(https://i.ibb.co/8n7jqYdF/world-blood-donor-day-creative-collage.jpg)] bg-no-repeat bg-cover min-h-screen w-full flex flex-col justify-center items-center">
-          <div class="absolute inset-0 bg-red-500 dark:bg-red-900 dark:opacity-35 opacity-20"></div>
+          <div className="absolute inset-0 bg-red-500 dark:bg-red-900 dark:opacity-35 opacity-20"></div>
           <div className="max-w-5xl text-center ">
             <h3 className="text-red-200 text-2xl sm:text-3xl md:text-5xl lg:text-7xl font-extrabold">
               Give Blood, Give Life

@@ -116,11 +116,11 @@ const Navbar = () => {
 
             {/* Dropdown Menu */}
             {isOpen && (
-              <div className="absolute rounded-lg border border-gray-200 shadow-md w-[50vw] md:w-[12vw] bg-white overflow-hidden right-0 top-12 text-sm transition-all duration-200 ease-in-out">
+              <div className="absolute rounded-lg border border-gray-200 shadow-md w-[50vw] md:w-[12vw] bg-white dark:bg-gray-600 dark:text-white overflow-hidden right-0 top-12 text-sm transition-all duration-200 ease-in-out">
                 <div className="flex flex-col cursor-pointer">
                   {/* Profile Section (Only if user is logged in) */}
                   {user && (
-                    <div className="px-4 py-3 flex items-center gap-3 border-b border-gray-200 bg-neutral-50">
+                    <div className="px-4 py-3 flex items-center gap-3 border-b border-gray-200 bg-neutral-50 dark:bg-neutral-400">
                       <img
                         className="rounded-full w-10 h-10 object-cover"
                         src={user.photoURL}
@@ -197,7 +197,7 @@ const Navbar = () => {
                         <span> Donate</span>
                       </NavLink>
                       <div className="px-4 py-3 flex text-red-500 items-center gap-2 hover:bg-neutral-100 transition font-semibold cursor-pointer border-b border-gray-200">
-                        <button className="flex gap-2" onClick={handleLogout}>
+                        <button className="flex gap-2 items-center" onClick={handleLogout}>
                           <span>
                             <AiOutlineLogout />
                           </span>

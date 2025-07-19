@@ -23,7 +23,6 @@ const AllDonationRequests = () => {
       try {
         const response = await axiosSecure.get("/donation-requests");
         setRequests(response.data);
-        console.log(response.data)
         setLoading(false);
       } catch (error) {
         console.error("Error fetching donation requests:", error);

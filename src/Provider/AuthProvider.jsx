@@ -72,8 +72,6 @@ const logout = async () => {
   };
     useEffect(() => {
       const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
-        
-
         if (currentUser?.email) {
           try {
             // get jwt token
@@ -87,8 +85,6 @@ const logout = async () => {
             const res = await axios.get(
               `${import.meta.env.VITE_API_URI}/users/role/${currentUser.email}`
             );
-
-    
 
             setUser({
               email: currentUser.email,

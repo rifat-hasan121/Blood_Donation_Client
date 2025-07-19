@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 
 const DonateBlood = () => {
     return (
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-center items-center gap-8 py-24">
+      <div className="w-11/12 md:max-w-7xl mx-auto flex flex-col md:flex-row justify-center items-center gap-8 py-24">
         {/* left div */}
         <div>
           <div className="badge bg-red-500 border-none text-white my-4">
