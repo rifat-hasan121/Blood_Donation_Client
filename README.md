@@ -4,12 +4,12 @@ Welcome to **BloodBridge**, a MERN Stack-based platform that bridges the gap bet
 
 ## 🔑 Admin Credentials
 
-- **Email:** admin@bloodbridge.com  
-- **Password:** Admin@123
+- **Email:** admin@gmail.com 
+- **Password:** 1234asdD
 
 ## 🌐 Live Website
 
-- [Live Site URL](https://your-live-site-url.com)
+- [Live Site URL](https://assignment-12-426ef.web.app/)
 
 ## 📂 Repositories
 
