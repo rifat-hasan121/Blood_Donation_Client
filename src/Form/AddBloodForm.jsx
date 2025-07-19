@@ -24,6 +24,7 @@ const AddBloodForm = () => {
 
   const [district, setDistrict] = useState("");
   const [upazilas, setUpazilas] = useState([]);
+   const isBlocked = user?.status === "blocked";
 
   const districtsAndUpazilas = {
     Dhaka: [
@@ -208,6 +209,15 @@ const AddBloodForm = () => {
   }, [selectedDistrict]);
 
   const onSubmit = async (data) => {
+
+      if (isBlocked) {
+        toast.error(
+          "You are blocked by the admin. You cannot submit a request."
+        );
+        return;
+      }
+    
+    
     const donationRequest = {
       requesterName: user?.displayName,
       requesterEmail: user?.email,

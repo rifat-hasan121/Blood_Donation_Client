@@ -47,7 +47,7 @@ const Banner = () => {
               </Link>
             </div>
             <Link to="/search-requests">
-              <button className="btn text-xl font-semibold px-6 py-8 rounded-4xl bg-yellow-500 text-white border-yellow-600 transition-transform duration-300 hover:scale-110">
+              <button className="relative z-10 btn text-xl font-semibold px-6 py-8 rounded-4xl bg-yellow-500 text-white border-yellow-600 transition-transform duration-300 hover:scale-110">
                 Find Donors
               </button>
             </Link>

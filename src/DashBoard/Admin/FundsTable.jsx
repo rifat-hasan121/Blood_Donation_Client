@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { format } from "date-fns";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import { Link } from "react-router";
 
 const FundsTable = () => {
   const [funds, setFunds] = useState([]);
@@ -38,6 +39,12 @@ const FundsTable = () => {
     <div className="p-6">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-xl font-semibold">User Funding</h2>
+        <Link
+          to="/payment"
+          className="btn bg-red-500 text-white dark:bg-red-800 font-bold border-none"
+        >
+          Donate
+        </Link>
       </div>
 
       {loading ? (

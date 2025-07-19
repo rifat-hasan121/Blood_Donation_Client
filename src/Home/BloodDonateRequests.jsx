@@ -226,7 +226,7 @@ const BloodDonateRequests = () => {
 
   const visibleRequests = showAll
     ? filteredRequests
-    : filteredRequests.slice(0, 8);
+    : filteredRequests.slice(0, 6);
 
   return (
     <div className="max-w-6xl px-4 mx-auto py-8">
