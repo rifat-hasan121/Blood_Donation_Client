@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import useAuth from "../../Api/useAuth";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 export const CheckoutForm = () => {
   const [error, setError] = useState("");
@@ -12,7 +13,8 @@ export const CheckoutForm = () => {
   const stripe = useStripe();
   const elements = useElements();
   const { user } = useAuth();
-  const navegate = useNavigate();
+  const navigate = useNavigate();
+  const axiosSecure=useAxiosSecure()
 
   // 🔸 Get clientSecret from backend
   useEffect(() => {
@@ -84,22 +86,19 @@ export const CheckoutForm = () => {
         date: new Date(),
       };
 
-      fetch("https://assaingment-12-server-iota.vercel.app/funds", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(paymentData),
+    axiosSecure
+      .post("/funds", paymentData)
+      .then((res) => {
+        if (res.data.insertedId) {
+          toast.success("✅ Payment Done");
+          navigate("/");
+        }
       })
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.insertedId) {
-            toast.success("✅ Payment Done");
-            navegate("/");
-          }
-        })
-        .catch((dbError) => {
-          console.error("DB Error:", dbError);
-          toast.error("❌ Payment not Done");
-        });
+      .catch((dbError) => {
+        console.error("DB Error:", dbError);
+        toast.error("❌ Payment not Done");
+      });
+
     }
 
     setProcessing(false);

@@ -6,6 +6,7 @@ import ActiveDonner from "./Marquee/ActiveDonner";
 import Campaigns from "./Marquee/Campaigns";
 import Cities from "./Marquee/Cities";
 import Donations from "./Marquee/Donations";
+import { Link } from "react-router";
 
 const Banner = () => {
   return (
@@ -38,13 +39,18 @@ const Banner = () => {
             </div>
             {/* became a donner */}
             <div>
-              <button className="btn mt-12 mb-8 text-xl font-semibold px-6 py-8 rounded-4xl bg-red-500 text-white border-red-600 transition-transform duration-300 hover:scale-110">
+              <Link
+                to="/signUp"
+                className="relative z-10 btn mt-12 mb-8 text-xl font-semibold px-6 py-8 rounded-4xl bg-red-500 text-white border-red-600 transition-transform duration-300 hover:scale-110"
+              >
                 Became a Donor
-              </button>
+              </Link>
             </div>
-            <button className="btn text-xl font-semibold px-6 py-8 rounded-4xl bg-yellow-500 text-white border-yellow-600 transition-transform duration-300 hover:scale-110">
-              Find Donors
-            </button>
+            <Link to="/search-requests">
+              <button className="btn text-xl font-semibold px-6 py-8 rounded-4xl bg-yellow-500 text-white border-yellow-600 transition-transform duration-300 hover:scale-110">
+                Find Donors
+              </button>
+            </Link>
           </div>
         </div>
       </section>

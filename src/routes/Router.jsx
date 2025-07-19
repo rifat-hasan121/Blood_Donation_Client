@@ -21,6 +21,7 @@ import DonorOverview from "../DashBoard/Donor/DonorOverview";
 import PrivateRoute from "./PrivateRoute";
 import Payment from "../pages/pyments/Payment";
 import FundsTable from "../DashBoard/Admin/FundsTable";
+import SearchDonationRequests from "../Shared/SearchDonationRequests";
 
 // Role Based Route Component
 const RoleBasedRoute = ({ allowedRoles }) => {
@@ -43,6 +44,10 @@ export const router = createBrowserRouter([
       {
         index: true,
         element: <Home />,
+      },
+      {
+        path: "/search-requests",
+        element: <SearchDonationRequests />,
       },
       {
         path: "payment",
@@ -157,7 +162,7 @@ export const router = createBrowserRouter([
             path: "funds-details",
             element: (
               <PrivateRoute>
-               <FundsTable/>
+                <FundsTable />
               </PrivateRoute>
             ),
           },
