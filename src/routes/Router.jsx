@@ -22,12 +22,13 @@ import PrivateRoute from "./PrivateRoute";
 import Payment from "../pages/pyments/Payment";
 import FundsTable from "../DashBoard/Admin/FundsTable";
 import SearchDonationRequests from "../Shared/SearchDonationRequests";
+import LoadingSpinner from "../Shared/LoadingSpinner";
 
 // Role Based Route Component
 const RoleBasedRoute = ({ allowedRoles }) => {
   const { user, loading } = use(AuthContext);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <LoadingSpinner/>;
 
   if (!user || !allowedRoles.includes(user.role)) {
     return <Navigate to="/login" replace />;
@@ -40,6 +41,7 @@ export const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout />,
+    
     children: [
       {
         index: true,
@@ -47,7 +49,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/search-requests",
-        element: <SearchDona tionRequests />,
+        element: <SearchDonationRequests />,
       },
       {
         path: "payment",

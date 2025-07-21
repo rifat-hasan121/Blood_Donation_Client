@@ -14,25 +14,48 @@ const Footer = () => {
 
         {/* Navigation Links */}
         <div className="flex space-x-6 mt-4 md:mt-0">
-          <Link to="/" className="hover:text-red-200">Home</Link>
-          <Link to="/about" className="hover:text-red-200">About</Link>
-          <Link to="/donation-requests" className="hover:text-red-200">Requests</Link>
-          <Link to="/donors" className="hover:text-red-200">Donors</Link>
-          <Link to="/contact" className="hover:text-red-200">Contact</Link>
+          <Link to="/" className="hover:text-red-200">
+            Home
+          </Link>
+          <Link to="/about" className="hover:text-red-200">
+            About
+          </Link>
+          <Link to="/signUp" className="hover:text-red-200">
+            Donors
+          </Link>
+          <Link to="/contact" className="hover:text-red-200">
+            Contact
+          </Link>
         </div>
 
         {/* Social Media Links */}
         <div className="flex space-x-4 mt-4 md:mt-0">
-          <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
+          <a
+            href="https://facebook.com"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <FaFacebook className="text-2xl hover:text-red-200" />
           </a>
-          <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
+          <a
+            href="https://twitter.com"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <FaTwitter className="text-2xl hover:text-red-200" />
           </a>
-          <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
+          <a
+            href="https://instagram.com"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <FaInstagram className="text-2xl hover:text-red-200" />
           </a>
-          <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
+          <a
+            href="https://linkedin.com"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <FaLinkedin className="text-2xl hover:text-red-200" />
           </a>
         </div>
@@ -40,7 +63,9 @@ const Footer = () => {
 
       {/* Footer Bottom */}
       <div className="mt-8 border-t border-white pt-4 text-center text-sm">
-        <p>&copy; {new Date().getFullYear()} Blood Donation. All rights reserved.</p>
+        <p>
+          &copy; {new Date().getFullYear()} Blood Donation. All rights reserved.
+        </p>
       </div>
     </footer>
   );

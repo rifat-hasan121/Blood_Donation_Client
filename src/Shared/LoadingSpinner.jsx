@@ -1,15 +1,9 @@
 import PropTypes from 'prop-types';
 import { RingLoader } from 'react-spinners';
 
-const LoadingSpinner = ({ smallHeight }) => {
+const LoadingSpinner = () => {
   return (
-    <div
-      className={` ${smallHeight ? 'h-[250px]' : 'h-[70vh]'}
-      flex 
-      flex-col 
-      justify-center 
-      items-center `}
-    >
+    <div className='flex flex-col justify-center items-center min-h-screen'>
       <RingLoader size={100} color='red' /> 
     </div>
   );

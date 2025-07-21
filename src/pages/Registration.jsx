@@ -6,6 +6,8 @@ import { TbFidgetSpinner } from "react-icons/tb";
 import { AuthContext } from "../Provider/AuthProvider";
 import { imageUpload } from "../Api/utlis";
 import { useForm } from "react-hook-form";
+import Lottie from "lottie-react";
+import bloodDrop from "../assets/Lotties/Blood drop.json";
 
 const Registration = () => {
   const {
@@ -192,6 +194,14 @@ const Registration = () => {
       "Nandigram",
     ],
   };
+  const [previewImage, setPreviewImage] = useState(null);
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setPreviewImage(URL.createObjectURL(file));
+    }
+  };
 
   const handleDistrictChange = (e) => {
     const selectedDistrict = e.target.value;
@@ -289,154 +299,168 @@ const Registration = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-red-100">
-      <div className="flex flex-col max-w-md p-6 rounded-md sm:p-10 bg-white text-gray-900">
-        <div className="mb-8 text-center">
-          <h1 className="my-3 text-4xl font-bold text-red-600">
-            Donation Blood
-          </h1>
-          <p className="text-sm text-gray-400">
-            Welcome to the Blood Donation Platform
-          </p>
+    <div className="flex justify-center items-center min-h-screen bg-white dark:bg-gray-700 dark:text-white px-4">
+      <div className="flex flex-col lg:flex-row items-center gap-8  p-6 rounded-md max-w-6xl w-full">
+        {/* ✅ Lottie Animation */}
+        <div className="hidden lg:block w-1/2 ">
+          <Lottie animationData={bloodDrop} loop={true} />
         </div>
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-          <div className="space-y-4">
-            <div>
-              <label htmlFor="name" className="block mb-2 text-sm">
-                Name
-              </label>
-              <input
-                type="text"
-                {...register("name", { required: true })}
-                className="w-full px-3 py-2 border rounded-md border-red-300"
-              />
-            </div>
 
-            <div>
-              <label htmlFor="image" className="block mb-2 text-sm">
-                Avatar Image
-              </label>
-              <input type="file" {...register("image")} accept="image/*" />
-            </div>
-
-            <div>
-              <label htmlFor="email" className="block mb-2 text-sm">
-                Email
-              </label>
-              <input
-                type="email"
-                {...register("email", { required: true })}
-                className="w-full px-3 py-2 border rounded-md border-red-300"
-              />
-            </div>
-
-            <div>
-              <label htmlFor="bloodGroup" className="block mb-2 text-sm">
-                Blood Group
-              </label>
-              <select
-                {...register("bloodGroup", { required: true })}
-                className="w-full px-3 py-2 border rounded-md border-red-300"
-              >
-                <option value="">Select Blood Group</option>
-                <option value="A+">A+</option>
-                <option value="B+">B+</option>
-                <option value="AB+">AB+</option>
-                <option value="O+">O+</option>
-                <option value="A-">A-</option>
-                <option value="B-">B-</option>
-                <option value="AB-">AB-</option>
-                <option value="O-">O-</option>
-              </select>
-            </div>
-
-            <div>
-              <label htmlFor="district" className="block mb-2 text-sm">
-                District
-              </label>
-              <select
-                {...register("district")}
-                onChange={handleDistrictChange}
-                className="w-full px-3 py-2 border rounded-md border-red-300"
-              >
-                <option value="">Select District</option>
-                {Object.keys(districtsAndUpazilas).map((d) => (
-                  <option key={d} value={d}>
-                    {d}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div>
-              <label htmlFor="upazila" className="block mb-2 text-sm">
-                Upazila
-              </label>
-              <select
-                {...register("upazila")}
-                className="w-full px-3 py-2 border rounded-md border-red-300"
-              >
-                <option value="">Select Upazila</option>
-                {upazilas.map((u) => (
-                  <option key={u} value={u}>
-                    {u}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div>
-              <label htmlFor="password" className="block mb-2 text-sm">
-                Password
-              </label>
-              <input
-                type="password"
-                {...register("password", { required: true })}
-                className="w-full px-3 py-2 border rounded-md border-red-300"
-              />
-            </div>
-
-            <div>
-              <label htmlFor="confirm_password" className="block mb-2 text-sm">
-                Confirm Password
-              </label>
-              <input
-                type="password"
-                {...register("confirm_password", { required: true })}
-                className="w-full px-3 py-2 border rounded-md border-red-300"
-              />
-            </div>
+        {/* ✅ Registration Form */}
+        <div className="w-full lg:w-1/2">
+          <div className="mb-6 text-center">
+            <h1 className="text-4xl font-bold text-red-600">Donation Blood</h1>
+            <p className="text-sm text-gray-400">
+              Welcome to the Blood Donation Platform
+            </p>
           </div>
 
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full py-2 bg-red-600 text-white rounded-md"
-          >
-            {loading ? (
-              <TbFidgetSpinner className="animate-spin mx-auto" size={24} />
-            ) : (
-              "Sign Up"
-            )}
-          </button>
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* Name */}
+              <div>
+                <label className="block text-sm mb-1">Name</label>
+                <input
+                  type="text"
+                  {...register("name", { required: true })}
+                  className="w-full px-3 py-2 border rounded-md border-red-300"
+                />
+              </div>
 
-          <p className="text-center text-sm text-gray-600">
-            Already have an account?{" "}
-            <Link to="/login" className="text-red-600">
-              Login here
-            </Link>
-          </p>
+              {/* Avatar Image + Preview */}
+              <div>
+                <label className="block text-sm mb-1">Avatar Image</label>
+                <input
+                  type="file"
+                  {...register("image")}
+                  accept="image/*"
+                  onChange={handleImageChange}
+                  className="w-full"
+                />
+                {previewImage && (
+                  <img
+                    src={previewImage}
+                    alt="Preview"
+                    className="mt-2 w-20 h-20 rounded-full object-cover border"
+                  />
+                )}
+              </div>
 
-          <div className="flex justify-center mt-4">
+              {/* Email */}
+              <div>
+                <label className="block text-sm mb-1">Email</label>
+                <input
+                  type="email"
+                  {...register("email", { required: true })}
+                  className="w-full px-3 py-2 border rounded-md border-red-300"
+                />
+              </div>
+
+              {/* Blood Group */}
+              <div>
+                <label className="block text-sm mb-1">Blood Group</label>
+                <select
+                  {...register("bloodGroup", { required: true })}
+                  className="w-full px-3 py-2 border rounded-md border-red-300"
+                >
+                  <option value="">Select</option>
+                  {["A+", "B+", "AB+", "O+", "A-", "B-", "AB-", "O-"].map(
+                    (g) => (
+                      <option key={g} value={g}>
+                        {g}
+                      </option>
+                    )
+                  )}
+                </select>
+              </div>
+
+              {/* District */}
+              <div>
+                <label className="block text-sm mb-1">District</label>
+                <select
+                  {...register("district")}
+                  onChange={handleDistrictChange}
+                  className="w-full px-3 py-2 border rounded-md border-red-300"
+                >
+                  <option value="">Select</option>
+                  {Object.keys(districtsAndUpazilas).map((d) => (
+                    <option key={d} value={d}>
+                      {d}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Upazila */}
+              <div>
+                <label className="block text-sm mb-1">Upazila</label>
+                <select
+                  {...register("upazila")}
+                  className="w-full px-3 py-2 border rounded-md border-red-300"
+                >
+                  <option value="">Select</option>
+                  {upazilas.map((u) => (
+                    <option key={u} value={u}>
+                      {u}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Password */}
+              <div>
+                <label className="block text-sm mb-1">Password</label>
+                <input
+                  type="password"
+                  {...register("password", { required: true })}
+                  className="w-full px-3 py-2 border rounded-md border-red-300"
+                />
+              </div>
+
+              {/* Confirm Password */}
+              <div>
+                <label className="block text-sm mb-1">Confirm Password</label>
+                <input
+                  type="password"
+                  {...register("confirm_password", { required: true })}
+                  className="w-full px-3 py-2 border rounded-md border-red-300"
+                />
+              </div>
+            </div>
+
+            {/* Submit Button */}
             <button
-              onClick={handleGoogleSignIn}
-              type="button"
-              className="flex items-center gap-2 border rounded-lg px-4 py-2 w-full"
+              type="submit"
+              disabled={loading}
+              className="w-full py-2 bg-red-600 text-white rounded-md"
             >
-              <FcGoogle /> Sign Up with Google
+              {loading ? (
+                <TbFidgetSpinner className="animate-spin mx-auto" size={24} />
+              ) : (
+                "Sign Up"
+              )}
             </button>
-          </div>
-        </form>
+
+            {/* Login link */}
+            <p className="text-center text-sm text-gray-600">
+              Already have an account?{" "}
+              <Link to="/login" className="text-red-600">
+                Login here
+              </Link>
+            </p>
+
+            {/* Google Sign In */}
+            <div className="flex justify-center mt-4">
+              <button
+                onClick={handleGoogleSignIn}
+                type="button"
+                className="flex items-center justify-center gap-2 border rounded-lg px-4 py-2 w-full hover:bg-red-600 transition-transform ease-in-out duration-150 hover:text-white"
+              >
+                <FcGoogle /> Sign Up with Google
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );
