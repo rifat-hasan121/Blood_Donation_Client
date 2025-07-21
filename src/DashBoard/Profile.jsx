@@ -6,14 +6,14 @@ import { MdEmail, MdPhone, MdLocationPin, MdBloodtype } from "react-icons/md";
 import { AuthContext } from "../Provider/AuthProvider";
 import toast from "react-hot-toast";
 import LoadingSpinner from "../Shared/LoadingSpinner";
-import { axiosSecure } from "../Hooks/useAxiosSecure";
+import useAxiosSecure, { axiosSecure } from "../Hooks/useAxiosSecure";
 
 const UserProfile = () => {
   const { user, updateUser, loading } = useContext(AuthContext);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
-
+const axiosSecure = useAxiosSecure();
   const { register, handleSubmit, reset } = useForm({
     defaultValues: {
       name: "",
@@ -63,20 +63,35 @@ const UserProfile = () => {
   };
 
   // ✅ Save updated profile to backend
+  // const onSubmit = async (data) => {
+  //   try {
+  //     const res = await fetch(
+  //       `https://assaingment-12-server-iota.vercel.app/profile/${data.email}`,
+  //       {
+  //         method: "PUT",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //         body: JSON.stringify(data),
+  //       }
+  //     );
+
+  //     const result = await res.json();
+
+  //     toast.success("Profile updated successfully! 🎉");
+
+  //     // Fetch again to refresh UI
+  //     fetchUserProfile(data.email);
+
+  //     setIsModalOpen(false);
+  //   } catch (err) {
+  //     console.error(err);
+  //     toast.error("Profile update failed!");
+  //   }
+  // };
   const onSubmit = async (data) => {
     try {
-      const res = await fetch(
-        `https://assaingment-12-server-iota.vercel.app/profile/${data.email}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        }
-      );
-
-      const result = await res.json();
+      const res = await axiosSecure.put(`/profile/${data.email}`, data);
 
       toast.success("Profile updated successfully! 🎉");
 

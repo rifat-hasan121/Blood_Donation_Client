@@ -299,7 +299,7 @@ const Registration = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-white dark:bg-gray-700 dark:text-white px-4">
+    <div className="flex justify-center items-center min-h-screen  bg-red-100 dark:bg-gray-700 dark:text-white px-4">
       <div className="flex flex-col lg:flex-row items-center gap-8  p-6 rounded-md max-w-6xl w-full">
         {/* ✅ Lottie Animation */}
         <div className="hidden lg:block w-1/2 ">
@@ -307,7 +307,7 @@ const Registration = () => {
         </div>
 
         {/* ✅ Registration Form */}
-        <div className="w-full lg:w-1/2">
+        <div className="w-full lg:w-1/2 ">
           <div className="mb-6 text-center">
             <h1 className="text-4xl font-bold text-red-600">Donation Blood</h1>
             <p className="text-sm text-gray-400">

@@ -186,10 +186,13 @@ const BloodDonateRequests = () => {
     const fetchDonationRequests = async () => {
       setIsLoading(true);
       try {
-        const { data } = await axiosSecure.get("/donation-requests");
+        const { data } = await axiosSecure.get("/donation-requests/user");
+        console.log("API data:", data);
+
         const pending = data.filter((r) => r.status === "Pending");
         setAllDonationRequests(pending);
-        setFilteredRequests(pending); // show all by default
+        setFilteredRequests(pending);
+       // show all by default
       } catch (err) {
         console.error(err);
         setError(err);
