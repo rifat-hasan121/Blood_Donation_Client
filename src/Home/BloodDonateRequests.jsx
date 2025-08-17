@@ -187,7 +187,7 @@ const BloodDonateRequests = () => {
       setIsLoading(true);
       try {
         const { data } = await axiosSecure.get("/donation-requests/user");
-        console.log("API data:", data);
+        // console.log("API data:", data);
 
         const pending = data.filter((r) => r.status === "Pending");
         setAllDonationRequests(pending);
@@ -232,7 +232,7 @@ const BloodDonateRequests = () => {
     : filteredRequests.slice(0, 6);
 
   return (
-    <div className="max-w-6xl px-4 mx-auto py-8">
+    <div className="max-w-7xl px-4 mx-auto py-8">
       <form
         onSubmit={handleSearch}
         className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8"

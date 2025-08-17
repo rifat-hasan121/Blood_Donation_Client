@@ -3,6 +3,7 @@ import { Link, NavLink } from "react-router";
 import { MdErrorOutline, MdOutlineDashboardCustomize } from "react-icons/md";
 import { AiOutlineMenu } from "react-icons/ai";
 import { FaUserCircle } from "react-icons/fa";
+import { MdOutlineBloodtype } from "react-icons/md";
 import { CgProfile } from "react-icons/cg";
 import { BiCommand, BiSolidDonateBlood } from "react-icons/bi";
 import { TbLogin } from "react-icons/tb";
@@ -45,7 +46,16 @@ const Navbar = () => {
           <span>Home</span>
         </NavLink>
       </li>
-     
+      {user && (
+        <li>
+          <NavLink className="flex gap-2" to="/donor">
+            <span>
+              <MdOutlineBloodtype />
+            </span>
+            <span>Donor</span>
+          </NavLink>
+        </li>
+      )}
       <li>
         <NavLink className="flex gap-2" to="/about">
           <span>
@@ -62,8 +72,6 @@ const Navbar = () => {
           <span>Contact</span>
         </NavLink>
       </li>
-     
-     
     </>
   );
 

@@ -23,6 +23,7 @@ import Payment from "../pages/pyments/Payment";
 import FundsTable from "../DashBoard/Admin/FundsTable";
 import SearchDonationRequests from "../Shared/SearchDonationRequests";
 import LoadingSpinner from "../Shared/LoadingSpinner";
+import OurDonor from "../component/OurDonor";
 
 // Role Based Route Component
 const RoleBasedRoute = ({ allowedRoles }) => {
@@ -54,6 +55,10 @@ export const router = createBrowserRouter([
       {
         path: "payment",
         Component: Payment,
+      },
+      {
+        path: "/donor",
+        element: <PrivateRoute><OurDonor /></PrivateRoute>,
       },
       {
         path: "about",
