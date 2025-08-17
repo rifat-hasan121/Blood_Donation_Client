@@ -48,22 +48,29 @@ const campaigns = [
 export default function Campaigns() {
     return (
       <>
-        <div className="mx-auto mb-8 text-center items-center mt-28">
-
-          <img
+        <div className="mx-auto mb-8 h-96 text-center flex flex-col justify-center items-center mt-28 bg-[url(https://www.shutterstock.com/image-vector/world-donor-day-abstract-wallpaper-600nw-2115749144.jpg)] bg-cover bg-center">
+          <h1 className="text-3xl md:text-5xl font-bold text-red-600 ">
+            Join Our Life-Saving Campaign
+          </h1>
+          <p className="mt-4 text-black max-w-2xl mx-auto">
+            Every drop of blood can save a life. Become a part of our campaign
+            to support patients in need. Together, we can build a stronger and
+            healthier community by donating blood and spreading awareness.
+          </p>
+          {/* <img
             src="https://t3.ftcdn.net/jpg/01/37/30/90/360_F_137309034_4oK5BoYqUc7sUoNor1ltGW0PAYNzExK9.jpg"
             alt=""
             className=" w-full h-96 object-cover rounded-lg shadow-lg"
-          />
+          /> */}
         </div>
         <div className="py-12 px-4 max-w-7xl mx-auto dark:bg-gray-900">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-3 dark:text-white">
+          {/* <h2 className="text-3xl md:text-4xl font-bold text-center mb-3 dark:text-white">
             DONATION CAMPAIGNS
           </h2>
           <p className="text-center text-gray-500 dark:text-gray-400 max-w-2xl mx-auto mb-10">
             Campaigns to encourage new donors to join and existing donors to
             continue to give blood.
-          </p>
+          </p> */}
 
           <div className="grid gap-8 md:grid-cols-2">
             {campaigns.map((c) => (
