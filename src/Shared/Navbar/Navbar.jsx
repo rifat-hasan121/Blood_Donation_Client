@@ -56,6 +56,17 @@ const Navbar = () => {
           </NavLink>
         </li>
       )}
+      {user && (
+        <li>
+          <NavLink className="flex gap-2" to="/campaigns">
+            <span>
+              <MdErrorOutline />
+            </span>
+            <span>Campaigns</span>
+          </NavLink>
+        </li>
+      )}
+
       <li>
         <NavLink className="flex gap-2" to="/about">
           <span>
@@ -87,7 +98,7 @@ const Navbar = () => {
                 alt=""
               />
               <h2 className=" hidden sm:text-xl md:flex text-2xl font-bold">
-                Blood<span className="text-red-500">Donation</span>
+                Blood<span className="text-red-400">Donation</span>
               </h2>
             </div>
           </Link>

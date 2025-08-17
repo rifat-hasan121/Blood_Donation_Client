@@ -36,9 +36,7 @@ export default function OurDonor() {
   }
 
   return (
-    <div className="px-4 py-10 mt-28 max-w-4/5 mx-auto">
-      
-
+    <div className="px-4 py-10 mt-28 max-w-4/5 mx-auto dark:bg-gray-900">
       {users.length === 0 ? (
         <ErrorElement message="No donors found" />
       ) : (
@@ -46,10 +44,10 @@ export default function OurDonor() {
           {users.map((user) => (
             <div
               key={user._id}
-              className="bg-white shadow-md rounded-2xl overflow-hidden hover:shadow-xl transition duration-300"
+              className="bg-white dark:bg-gray-800 shadow-md rounded-2xl overflow-hidden hover:shadow-xl transition duration-300"
             >
               {/* Cover Photo */}
-              <div className="relative h-32 bg-gray-200">
+              <div className="relative h-32 bg-gray-200 dark:bg-gray-700">
                 {user.coverPhoto ? (
                   <img
                     src={user.coverPhoto}
@@ -57,7 +55,7 @@ export default function OurDonor() {
                     className="w-full h-full object-cover"
                   />
                 ) : (
-                  <div className="w-full h-full bg-gradient-to-r from-indigo-200 to-purple-200"></div>
+                  <div className="w-full h-full bg-gradient-to-r from-indigo-200 to-purple-200 dark:from-gray-600 dark:to-gray-700"></div>
                 )}
 
                 {/* Profile Photo */}
@@ -65,20 +63,24 @@ export default function OurDonor() {
                   <img
                     src={user.photoURL || "https://via.placeholder.com/100"}
                     alt={user.name}
-                    className="w-20 h-20 rounded-full border-4 border-white shadow-md object-cover"
+                    className="w-20 h-20 rounded-full border-4 border-white dark:border-gray-800 shadow-md object-cover"
                   />
                 </div>
               </div>
 
               {/* User Info */}
               <div className="pt-12 pb-6 text-center px-4">
-                <h3 className="text-lg font-semibold">{user.name}</h3>
-                <p className="text-sm text-gray-500 capitalize">
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+                  {user.name}
+                </h3>
+                <p className="text-sm text-gray-500 dark:text-gray-400 capitalize">
                   Role: {user.role}
                 </p>
                 <p
                   className={`mt-2 text-sm font-medium ${
-                    user.status === "active" ? "text-green-600" : "text-red-500"
+                    user.status === "active"
+                      ? "text-green-600 dark:text-green-400"
+                      : "text-red-500 dark:text-red-400"
                   }`}
                 >
                   Status: {user.status}

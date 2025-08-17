@@ -24,6 +24,7 @@ import FundsTable from "../DashBoard/Admin/FundsTable";
 import SearchDonationRequests from "../Shared/SearchDonationRequests";
 import LoadingSpinner from "../Shared/LoadingSpinner";
 import OurDonor from "../component/OurDonor";
+import Campaigns from "../component/Campaigns";
 
 // Role Based Route Component
 const RoleBasedRoute = ({ allowedRoles }) => {
@@ -42,7 +43,7 @@ export const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout />,
-    
+
     children: [
       {
         index: true,
@@ -58,7 +59,19 @@ export const router = createBrowserRouter([
       },
       {
         path: "/donor",
-        element: <PrivateRoute><OurDonor /></PrivateRoute>,
+        element: (
+          <PrivateRoute>
+            <OurDonor />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/campaigns",
+        element: (
+          <PrivateRoute>
+            <Campaigns />
+          </PrivateRoute>
+        ),
       },
       {
         path: "about",

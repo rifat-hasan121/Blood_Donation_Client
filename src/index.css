@@ -21,7 +21,7 @@
 }
 
 a.active {
-  @apply text-red-600;
+  @apply text-red-400;
 }
 
 @custom-variant dark (&:where(.dark, .dark *));

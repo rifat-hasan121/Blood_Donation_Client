@@ -1,8 +1,10 @@
-import React from "react";
+import React, { use } from "react";
 import { Link } from "react-router";
 import { FaTint, FaFacebook, FaTwitter, FaInstagram, FaLinkedin } from 'react-icons/fa'; // Changed FaBlood to FaTint
+import { AuthContext } from "../../Provider/AuthProvider";
 
 const Footer = () => {
+  const {user}= use(AuthContext);
   return (
     <footer className="bg-red-700 text-white py-8">
       <div className="container mx-auto px-6 flex flex-wrap justify-between items-center">
@@ -17,12 +19,20 @@ const Footer = () => {
           <Link to="/" className="hover:text-red-200">
             Home
           </Link>
+          {user && (
+            <Link to="/donor" className="hover:text-red-200">
+              Donor
+            </Link>
+          )}
+          {user && (
+              <Link className="flex gap-2" to="/campaigns">
+              Campaigns
+              </Link>
+          )}
           <Link to="/about" className="hover:text-red-200">
             About
           </Link>
-          <Link to="/signUp" className="hover:text-red-200">
-            Donors
-          </Link>
+
           <Link to="/contact" className="hover:text-red-200">
             Contact
           </Link>
