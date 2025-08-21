@@ -5,13 +5,16 @@ import DonateBlood from './DonateBlood';
 import BloodDonateRequests from './BloodDonateRequests';
 import WhyDonate from './WhyDonate';
 import { Helmet } from 'react-helmet-async';
+import DonationProcess from '../component/DonationProcess';
+import CampaignGallery from '../component/CampaignGallery';
+import JoinSaveLife from '../component/JoinSaveLife';
 
 const Home = () => {
     return (
       <>
         <Helmet>
           <title>Home | Blood Donation </title>
-       </Helmet>
+        </Helmet>
         <div className="w-full">
           {/* banner section */}
           <section className="w-full">
@@ -24,6 +27,18 @@ const Home = () => {
           {/* donate section */}
           <section className="bg-red-300 dark:bg-gray-500">
             <DonateBlood />
+          </section>
+          {/* blood donation process */}
+          <section className="bg-white dark:bg-gray-500">
+           <DonationProcess/>
+          </section>
+          {/* campaign gallery */}
+          <section className='bg-red-300 dark:bg-gray-500'>
+            <CampaignGallery/>
+          </section>
+          {/* join save life */}
+          <section className='bg-red-100 dark:bg-gray-600'>
+            <JoinSaveLife/>
           </section>
           {/* requested donation */}
           <section className="bg-red-100 dark:bg-gray-600">
