@@ -28,7 +28,7 @@ const Home = () => {
           {/* requested donation */}
           <section className="bg-red-100 dark:bg-gray-600">
             <div>
-              <h3 className="text-4xl text-red-500 dark:text-red-800 md:text-3xl font-bold text-center py-12">
+              <h3 className="text-4xl text-red-500 dark:text-red-800 md:text-3xl font-bold text-center py-24">
                 Urgent Blood Donation Requests
               </h3>
             </div>

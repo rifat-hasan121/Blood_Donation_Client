@@ -12,7 +12,7 @@ const Banner = () => {
   return (
     <div className="">
       <section className="">
-        <div className="relative bg-[url(https://i.ibb.co/8n7jqYdF/world-blood-donor-day-creative-collage.jpg)] bg-no-repeat bg-cover min-h-screen w-full flex flex-col justify-center items-center">
+        <div className="relative bg-[url(https://i.ibb.co.com/9mPqhWKt/world-blood-donor-day-creative-collage.jpg)] bg-no-repeat bg-cover min-h-screen w-full flex flex-col justify-center items-center">
           <div className="absolute inset-0 bg-red-500 dark:bg-red-900 dark:opacity-35 opacity-20"></div>
           <div className="max-w-5xl text-center ">
             <h3 className="text-red-200 text-2xl sm:text-3xl md:text-5xl lg:text-7xl font-extrabold">
@@ -47,7 +47,7 @@ const Banner = () => {
               </Link>
             </div>
             <Link to="/search-requests">
-              <button className="relative z-10 btn text-xl font-semibold px-6 py-8 rounded-4xl bg-yellow-500 text-white border-yellow-600 transition-transform duration-300 hover:scale-110">
+              <button className="relative z-10 btn text-xl font-semibold px-6 py-8 rounded-4xl  text-white btn-outline border-red-500 border-2 hover:bg-red-500 transition-transform duration-300 hover:scale-110">
                 Find Donors
               </button>
             </Link>
