@@ -8,6 +8,8 @@ import { Helmet } from 'react-helmet-async';
 import DonationProcess from '../component/DonationProcess';
 import CampaignGallery from '../component/CampaignGallery';
 import JoinSaveLife from '../component/JoinSaveLife';
+import OurSponsors from '../component/OurSponsors';
+import RecentBlog from '../component/RecentBlog';
 
 const Home = () => {
     return (
@@ -48,6 +50,14 @@ const Home = () => {
               </h3>
             </div>
             <BloodDonateRequests />
+          </section>
+          {/* our sponsor */}
+          <section >
+            <OurSponsors/>
+          </section>
+          {/* recent blogs */}
+          <section className='bg-red-300 dark:bg-gray-600'>
+            <RecentBlog/>
           </section>
           {/* why donate */}
           <section>
