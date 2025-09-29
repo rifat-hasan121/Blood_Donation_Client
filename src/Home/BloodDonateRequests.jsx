@@ -309,12 +309,12 @@ const BloodDonateRequests = () => {
         {visibleRequests.map((request) => (
           <div
             key={request._id}
-            className="border rounded-lg shadow-md bg-red-300/60 hover:shadow-lg group"
+            className=" rounded-lg shadow-md bg-red-300/60 hover:shadow-lg group"
             data-aos="flip-left"
           >
             <div className="absolute bottom-0 left-0 h-1 w-0 bg-red-600 transition-all duration-300 group-hover:w-full"></div>
 
-            <h2 className="font-semibold p-4 text-gray-800 text-2xl text-center border-b mb-4">
+            <h2 className="font-semibold p-4 text-gray-800 text-2xl text-center  mb-4">
               {request.recipientName}
             </h2>
 

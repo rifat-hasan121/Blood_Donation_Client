@@ -13,32 +13,32 @@ const CampaignGallery = () => {
           <img
             src="https://templates.bwlthemes.com/blood_donation/v_2/images/gallery_3.jpg"
             alt="Campaign 1"
-            className="w-full h-80 object-cover rounded"
+            className="w-full h-80 object-cover rounded hover:scale-105 hover:-rotate-2 transition-transform duration-300"
           />
           <img
             src="https://templates.bwlthemes.com/blood_donation/v_2/images/gallery_2.jpg"
             alt="Campaign 2"
-            className="w-full h-80 object-cover rounded"
+            className="w-full h-80 object-cover rounded hover:scale-105 hover:-rotate-2 transition-transform duration-300"
           />
           <img
             src="https://templates.bwlthemes.com/blood_donation/v_2/images/gallery_6.jpg"
             alt="Campaign 3"
-            className="w-full h-80 object-cover rounded"
+            className="w-full h-80 object-cover rounded hover:scale-105 hover:-rotate-2 transition-transform duration-300"
           />
           <img
             src="https://templates.bwlthemes.com/blood_donation/v_2/images/gallery_1.jpg"
             alt="Campaign 4"
-            className="w-full h-80 object-cover rounded"
+            className="w-full h-80 object-cover rounded hover:scale-105 hover:-rotate-2 transition-transform duration-300"
           />
           <img
             src="https://templates.bwlthemes.com/blood_donation/v_2/images/gallery_1.jpg"
             alt="Campaign 5"
-            className="w-full h-80 object-cover rounded"
+            className="w-full h-80 object-cover rounded hover:scale-105 hover:-rotate-2 transition-transform duration-300"
           />
           <img
             src="https://templates.bwlthemes.com/blood_donation/v_2/images/gallery_4.jpg"
             alt="Campaign 6"
-            className="w-full h-80 object-cover rounded"
+            className="w-full h-80 object-cover rounded hover:scale-105 hover:-rotate-2 transition-transform duration-300"
           />
         </div>
       </div>

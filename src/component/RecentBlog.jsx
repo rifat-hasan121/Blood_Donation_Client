@@ -18,7 +18,7 @@ const RecentBlog = () => {
               <img
                 src="https://wp.bwlthemes.com/wp_reddrop_buddies/wp-content/uploads/2014/11/blog_1-1-645x430.jpg"
                 alt="Blood Connects Us All in a Soul"
-                className="w-full h-48 object-cover rounded mb-2"
+                className="w-full h-48 object-cover rounded mb-2 hover:scale-105 transition-transform duration-300"
               />
               <p className="text-red-600 text-sm mb-1">
                 © 15, November 2014 ◎ 0 Comments
@@ -35,7 +35,7 @@ const RecentBlog = () => {
               <img
                 src="https://wp.bwlthemes.com/wp_reddrop_buddies/wp-content/uploads/2014/11/blog_3-645x430.jpg"
                 alt="Why Should I Donate Blood ?"
-                className="w-full h-48 object-cover rounded mb-2"
+                className="w-full h-48 object-cover rounded mb-2 hover:scale-105 transition-transform duration-300"
               />
               <p className="text-red-600 text-sm mb-1">
                 © 15, November 2014 ◎ 0 Comments
@@ -52,7 +52,7 @@ const RecentBlog = () => {
               <img
                 src="https://wp.bwlthemes.com/wp_reddrop_buddies/wp-content/uploads/2014/11/blog_2-1-645x430.jpg"
                 alt="Give Blood and Save Three Lives"
-                className="w-full h-48 object-cover rounded mb-2"
+                className="w-full h-48 object-cover rounded mb-2 hover:scale-105 transition-transform duration-300"
               />
               <p className="text-red-600 text-sm mb-1">
                 © 21, February 2017 ◎ 0 Comments

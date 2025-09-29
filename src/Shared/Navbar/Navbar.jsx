@@ -39,7 +39,7 @@ const Navbar = () => {
   const links = (
     <>
       <li>
-        <NavLink className="flex gap-2" to="/">
+        <NavLink className="flex gap-2 " to="/">
           <span>
             <IoHomeOutline />
           </span>

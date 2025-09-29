@@ -15,7 +15,7 @@ const DonationProcess = () => {
             <img
               src="https://templates.bwlthemes.com/blood_donation/v_2/images/process_1.jpg"
               alt="Registration"
-              className="w-full h-48 object-cover mb-4 rounded"
+              className="w-full h-48 object-cover mb-4 rounded hover:scale-105 transition-transform duration-300"
             />
             <div className="bg-red-500 text-white text-3xl font-bold w-16 h-16 flex items-center justify-center rounded-full mx-auto mb-4">
               1
@@ -31,7 +31,7 @@ const DonationProcess = () => {
             <img
               src="https://templates.bwlthemes.com/blood_donation/v_2/images/process_2.jpg"
               alt="Screening"
-              className="w-full h-48 object-cover mb-4 rounded"
+              className="w-full h-48 object-cover mb-4 rounded hover:scale-105 transition-transform duration-300"
             />
             <div className="bg-red-500 text-white text-3xl font-bold w-16 h-16 flex items-center justify-center rounded-full mx-auto mb-4">
               2
@@ -47,7 +47,7 @@ const DonationProcess = () => {
             <img
               src="https://templates.bwlthemes.com/blood_donation/v_2/images/process_3.jpg"
               alt="Donation"
-              className="w-full h-48 object-cover mb-4 rounded"
+              className="w-full h-48 object-cover mb-4 rounded hover:scale-105 transition-transform duration-300"
             />
             <div className="bg-red-500 text-white text-3xl font-bold w-16 h-16 flex items-center justify-center rounded-full mx-auto mb-4">
               3

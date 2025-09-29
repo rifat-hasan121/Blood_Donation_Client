@@ -16,27 +16,27 @@ const OurSponsors = () => {
             <img
               src="https://wp.bwlthemes.com/wp_reddrop_buddies/wp-content/uploads/2016/11/logo_8-300x195.jpg"
               alt="Creatives"
-              className="w-32 h-32 object-contain"
+              className="w-32 h-32 object-contain hover:scale-105 transition-transform duration-300"
             />
             <img
               src="https://wp.bwlthemes.com/wp_reddrop_buddies/wp-content/uploads/2016/11/logo_7-300x195.jpg"
               alt="Vintage"
-              className="w-32 h-32 object-contain"
+              className="w-32 h-32 object-contain hover:scale-105 transition-transform duration-300"
             />
             <img
               src="https://wp.bwlthemes.com/wp_reddrop_buddies/wp-content/uploads/2016/11/logo_6-300x195.jpg"
               alt="Retro"
-              className="w-32 h-32 object-contain"
+              className="w-32 h-32 object-contain hover:scale-105 transition-transform duration-300"
             />
             <img
               src="https://wp.bwlthemes.com/wp_reddrop_buddies/wp-content/uploads/2016/11/logo_5-300x195.jpg"
               alt="Vintage"
-              className="w-32 h-32 object-contain"
+              className="w-32 h-32 object-contain hover:scale-105 transition-transform duration-300"
             />
             <img
               src="https://wp.bwlthemes.com/wp_reddrop_buddies/wp-content/uploads/2016/11/logo_4-300x195.jpg"
               alt="Hipster"
-              className="w-32 h-32 object-contain"
+              className="w-32 h-32 object-contain hover:scale-105 transition-transform duration-300"
             />
           </div>
         </div>
